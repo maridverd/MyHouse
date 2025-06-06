@@ -1,0 +1,165 @@
+
+/*
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}*/
+
+
+/* Basic Reset & Body Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url(qingbao-meng-01_igFr7hd4-unsplash.jpg);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.top-bar {
+    width: 100%;
+    background-color: #E4DED2;
+    color: #E4DED2;
+    padding: 5px 20px 5px; /* Espaçamento interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil na parte inferior */
+    box-sizing: border-box; /* Inclui padding e border na largura total */
+    display: flex;
+    justify-content: flex-start; /* Alinha o logo à esquerda da barra (se não houver outros itens) */
+    align-items: center; /* Centraliza o logo verticalmente na barra */
+}
+
+.top-bar-logo {
+    height: 5%; /* Altura do logo dentro da barra. Ajuste conforme necessário. */
+    width: 5%; /* Mantém a proporção */
+    /* Se quiser o logo no canto direito, use: */
+    /* margin-left: auto; */
+}
+
+/* Container for the Sign-up Form */
+.signup-container {
+    background-color: #E4DED2;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px; /* Limit the max width of the form */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    margin-top: 50px;
+}
+
+/* Form Heading */
+.signup-form h2 {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+    font-size: 2em;
+    font-weight: 600;
+}
+
+.signup-form h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #07702E; /* Or any color you prefer */
+    font-size: 1.4em;
+    border-bottom: 1px solid #eee; /* Optional: a subtle line below the heading */
+    padding-bottom: 5px;
+}
+/* Form Group (Label + Input) */
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: block; /* Make label take full width and put input on next line */
+        margin-bottom: 8px;
+        color: #555;
+        font-weight: bold;
+        font-size: 0.95em;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"] {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1em;
+        box-sizing: border-box; /* Crucial for width: 100% with padding */
+        transition: border-color 0.3s ease;
+    }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus {
+            border-color: #E4DED2; /* Highlight border on focus */
+            outline: none; /* Remove default focus outline */
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+/* Sign Up Button */
+.btn-signup {
+    width: 100%;
+    padding: 15px;
+    background-color: #07702E;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin-top: 20px; /* Space above the button */
+}
+
+    .btn-signup:hover {
+        background-color: #07702E; /* Darker blue on hover */
+        transform: translateY(-2px); /* Slight lift effect */
+    }
+
+    .btn-signup:active {
+        transform: translateY(0); /* Press effect */
+    }
+
+/* Login Link */
+.login-link {
+    text-align: center;
+    margin-top: 25px;
+    color: #666;
+    font-size: 0.95em;
+}
+
+    .login-link a {
+        color: #07702E;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+/* Basic Responsiveness (for smaller screens) */
+@media (max-width: 600px) {
+    .signup-container {
+        margin: 20px;
+        padding: 25px;
+        box-shadow: none; /* Remove shadow on very small screens for a cleaner look */
+    }
+
+    .signup-form h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .form-group input {
+        padding: 10px 12px;
+    }
+
+    .btn-signup {
+        padding: 12px;
+        font-size: 1em;
+    }
+}
