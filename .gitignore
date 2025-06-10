@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 MyHouse/MyHouse.sln
 .gitignore
+MyHouse/log.txt
+MyHouse/usuarios.json
