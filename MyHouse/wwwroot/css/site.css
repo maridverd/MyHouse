@@ -18,25 +18,6 @@ body {
     min-height: 100vh;
 }
 
-.top-bar {
-    width: 100%;
-    background-color: #E4DED2;
-    color: #E4DED2;
-    padding: 5px 20px 5px; /* Espaçamento interno */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil na parte inferior */
-    box-sizing: border-box; /* Inclui padding e border na largura total */
-    display: flex;
-    justify-content: flex-start; /* Alinha o logo à esquerda da barra (se não houver outros itens) */
-    align-items: center; /* Centraliza o logo verticalmente na barra */
-}
-
-.top-bar-logo {
-    height: 5%; /* Altura do logo dentro da barra. Ajuste conforme necessário. */
-    width: 5%; /* Mantém a proporção */
-    /* Se quiser o logo no canto direito, use: */
-    /* margin-left: auto; */
-}
-
 /* Container for the Sign-up Form */
 .signup-container {
     background-color: #E4DED2;
