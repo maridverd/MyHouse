@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -25,11 +22,11 @@ public struct Senha {
 
 public static class CadastroSistema {
     private static readonly string ArquivoUsuarios = "usuarios.json";
-    public static Dictionary<string, Usuario> Usuarios;
+    public static Dictionary<string, Usuario> Usuarios { get; private set; }
 
     static CadastroSistema() {
         CarregarDados();
-        if (Usuarios == null) Usuarios = new();
+        Usuarios ??= new();
     }
 
     // Carrega os dados existentes do arquivo JSON
@@ -37,7 +34,6 @@ public static class CadastroSistema {
         if (!File.Exists(ArquivoUsuarios)) {
             Log.Instance.WriteLine("Sem arquivo");
             File.Create(ArquivoUsuarios);
-            Usuarios = new();
             return;
         }
         else {
@@ -46,22 +42,12 @@ public static class CadastroSistema {
             }
             catch (JsonException jsonException) {
                 Log.Instance.WriteLine($"Json Exception: {jsonException}. Creating empty dictionary instead");
-                Usuarios = new();
             }
             catch (Exception exception) {
                 Log.Instance.WriteLine($"Exception: {exception}. Creating empty dictionary instead");
-                Usuarios = new();
             }
         }
     }
-    private const int caracteresMinimosSenha = 12;
-    // private static CodigoRetorno AvaliarSenha(string senha) {
-    //     if (senha.Length < caracteresMinimosSenha) {
-    //         return new CodigoRetorno(1, $"Senha deve ter comprimento maior ou igual a {caracteresMinimosSenha} caracteres.");
-    //     }
-    //     if (senha.)
-    // }
-
     public static List<CodigoRetorno> CadastrarUsuario(string email, string senha, Nome nome, string cpf, string endereco) {
         List<CodigoRetorno> codigos = new();
         if (email != null && senha != null && cpf != null && endereco != null) {

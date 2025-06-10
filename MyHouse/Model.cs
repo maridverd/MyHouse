@@ -73,14 +73,3 @@ public class Model
         }
     }
 }
-
-public class Program
-{
-    public static void Main()
-    {
-        Model aux = Model.Create("1234");
-        aux.Sales = aux.Sales + 10;
-        aux.Price = 1;
-        aux.Store();
-    }
-}
