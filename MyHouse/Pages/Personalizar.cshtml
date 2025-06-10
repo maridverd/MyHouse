@@ -1,0 +1,102 @@
+@page
+@model PersonalizarModel
+@{
+    ViewData["Title"] = "Personalizar Casa";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - MyHOUSE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eee;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #00a86b;
+            margin-bottom: 30px;
+        }
+
+        .categoria-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .categoria {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            flex: 1 1 200px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .categoria:hover {
+            transform: scale(1.02);
+        }
+
+        .categoria h2 {
+            color: #333;
+            margin-top: 0;
+            font-size: 20px;
+            border-bottom: 2px solid #00a86b;
+            padding-bottom: 10px;
+        }
+
+        .categoria ul {
+            padding-left: 20px;
+        }
+
+        .categoria ul li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Personalize sua Casa</h1>
+    <div class="categoria-container">
+        <div class="categoria">
+            <h2>Automação e Segurança</h2>
+            <ul>
+                <li>Fechadura digital</li>
+                <li>Câmeras de segurança</li>
+                <li>Sistema de alarme</li>
+                <li>Controle por app</li>
+            </ul>
+        </div>
+        <div class="categoria">
+            <h2>Sanitário</h2>
+            <ul>
+                <li>Louças premium</li>
+                <li>Metais modernos</li>
+                <li>Ducha higiênica</li>
+                <li>Economia de água</li>
+            </ul>
+        </div>
+        <div class="categoria">
+            <h2>Climatização</h2>
+            <ul>
+                <li>Infra para ar-condicionado</li>
+                <li>Ventilação cruzada</li>
+                <li>Isolamento térmico</li>
+                <li>Janelas com controle solar</li>
+            </ul>
+        </div>
+        <div class="categoria">
+            <h2>Acabamentos</h2>
+            <ul>
+                <li>Pisos vinílicos</li>
+                <li>Revestimentos 3D</li>
+                <li>Tintas laváveis</li>
+                <li>Rodapés embutidos</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

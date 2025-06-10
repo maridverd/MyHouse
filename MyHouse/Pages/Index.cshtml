@@ -4,23 +4,18 @@
     ViewData["Title"] = "Home page";
 }
 
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyHOUSE</title>
-    <link rel="stylesheet" href="~/Pages/Shared/_Layout.cshtml.css" />
-
-    <!-- Font Awesome para ícones (opcional) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
         html, body {
             height: 100%;
             margin: 0;
-        }
-
-        body {
             font-family: Arial, sans-serif;
             background-color: #ccc;
         }
@@ -83,11 +78,6 @@
             transform: translateY(-1px);
         }
 
-        .menu button:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 168, 107, 0.4);
-        }
-
         .menu a {
             text-decoration: none;
             color: white;
@@ -107,6 +97,34 @@
             margin-left: 220px;
             padding: 20px;
             color: #333;
+        }
+
+        .imagem-container {
+            margin-top: 20px;
+        }
+
+        .imagem-container img {
+            max-width: 100%;
+            width: 500px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.3);
+        }
+
+        .personalizar-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 20px;
+            background-color: #00a86b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .personalizar-btn:hover {
+            background-color: #007e52;
         }
 
         .footer {
@@ -132,11 +150,11 @@
                 <i class="fas fa-home" style="margin-right: 8px;"></i> Casas
             </button>
             <div id="casas" style="display: none;">
-                <a href="#">D150</a>
-                <a href="#">D170</a>
-                <a href="#">D190</a>
-                <a href="#">D270</a>
-                <a href="#">D290</a>
+                <a href="#" onclick="mostrarImagem('casad150.jpeg')">D150</a>
+                <a href="#" onclick="mostrarImagem('casad170.jpeg')">D170</a>
+                <a href="#" onclick="mostrarImagem('casad190.jpg')">D190</a>
+                <a href="#" onclick="mostrarImagem('casad270.jpg')">D270</a>
+                <a href="#" onclick="mostrarImagem('casad290.jpg')">D290</a>
             </div>
 
             <button onclick="toggleMenu('outros')">
@@ -154,14 +172,25 @@
 
     <div class="content">
         <h2>Bem-vindo ao MyHOUSE!</h2>
-        <p>Mais que uma empresa inovadora, um conceito: casas cheias de tecnologia, estilo e personalidade. Nossos produtos pretendem criar espaços que refletem a individualidade de cada cliente, combinando funcionalidade e beleza, com tecnologia e muita inovação.</p>
+        <p>Mais que uma empresa inovadora, um conceito: casas cheias de tecnologia, estilo e personalidade.</p>
+
+        <div class="imagem-container" id="imagemContainer" style="display: none;">
+            <img id="imagemCasa" src="" alt="Imagem da Casa Selecionada">
+            <br />
+            <a href="/Personalizar" class="personalizar-btn">Personalizar</a>
+        </div>
     </div>
 
     <script>
         function toggleMenu(id) {
             const el = document.getElementById(id);
-            if (!el) return;
             el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function mostrarImagem(nomeImagem) {
+            const imagem = document.getElementById('imagemCasa');
+            imagem.src = `/images/casas/${nomeImagem}`;
+            document.getElementById('imagemContainer').style.display = 'block';
         }
     </script>
 
