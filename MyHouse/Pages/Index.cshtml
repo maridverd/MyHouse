@@ -7,11 +7,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyHOUSE</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MyHOUSE - @ViewData["Title"]</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
     <style>
         html, body {
             height: 100%;
@@ -19,47 +18,28 @@
             font-family: Arial, sans-serif;
             background-color: #ccc;
         }
-
         .sidebar {
             position: fixed;
-            left: 0;
-            top: 0;
+            left: 0; top: 0;
             width: 200px;
             height: 100%;
             background-color: rgba(228, 222, 210, 0.9);
             padding-top: 20px;
         }
-
         .logo {
             text-align: center;
             margin-bottom: 30px;
         }
-
-        .logo h1 {
-            margin: 0;
-            font-size: 24px;
-            color: #00a86b;
+        .logo img {
+            width: 150px;
         }
-
-        .logo p {
-            margin: 0;
-            font-size: 12px;
-        }
-
         .menu {
             display: flex;
             flex-direction: column;
             gap: 10px;
             padding: 0 20px;
         }
-
-        .menu h3 {
-            margin-bottom: 5px;
-            border-bottom: 1px solid white;
-            padding-bottom: 5px;
-        }
-
-        .menu button {
+        .menu button, .menu a {
             background-color: #00a86b;
             color: white;
             border: none;
@@ -69,71 +49,42 @@
             cursor: pointer;
             text-align: left;
             transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
             width: 100%;
+            text-decoration: none;
+            display: block;
         }
-
-        .menu button:hover {
+        .menu button:hover, .menu a:hover {
             background-color: #007e52;
             transform: translateY(-1px);
         }
-
-        .menu a {
-            text-decoration: none;
-            color: white;
-            background-color: #444;
-            padding: 8px;
-            border-radius: 4px;
-            transition: background 0.3s;
-            display: block;
-            margin-top: 4px;
+        .submenu {
+            margin-left: 15px;
+            margin-top: 5px;
         }
-
-        .menu a:hover {
-            background-color: #666;
-        }
-
         .content {
             margin-left: 220px;
             padding: 20px;
             color: #333;
+            max-width: 900px;
         }
-
-        .imagem-container {
-            margin-top: 20px;
-        }
-
         .imagem-container img {
-            max-width: 100%;
-            width: 500px;
-            height: auto;
+            max-width: 500px;
             border-radius: 10px;
             box-shadow: 0 0 8px rgba(0,0,0,0.3);
         }
-
         .personalizar-btn {
             display: inline-block;
             margin-top: 10px;
             padding: 8px 20px;
             background-color: #00a86b;
             color: white;
-            border: none;
             border-radius: 5px;
             text-decoration: none;
             font-size: 16px;
         }
-
         .personalizar-btn:hover {
             background-color: #007e52;
-        }
-
-        .footer {
-            width: 100%;
-            white-space: nowrap;
-            line-height: 40px;
-            background: #E4DED2;
-            color: #555;
-            text-align: center;
         }
     </style>
 </head>
@@ -141,7 +92,7 @@
 
     <div class="sidebar">
         <div class="logo">
-            <img src="~/images/MyHouseLogo.png" alt="Logo MyHOUSE" style="width: 150px;">
+            <img src="~/images/MyHouseLogo.png" alt="Logo MyHOUSE" />
             <p>By SIConTech</p>
         </div>
 
@@ -149,7 +100,7 @@
             <button onclick="toggleMenu('casas')">
                 <i class="fas fa-home" style="margin-right: 8px;"></i> Casas
             </button>
-            <div id="casas" style="display: none;">
+            <div id="casas" style="display:none;">
                 <a href="#" onclick="mostrarImagem('casad150.jpeg')">D150</a>
                 <a href="#" onclick="mostrarImagem('casad170.jpeg')">D170</a>
                 <a href="#" onclick="mostrarImagem('casad190.jpg')">D190</a>
@@ -160,7 +111,7 @@
             <button onclick="toggleMenu('outros')">
                 <i class="fas fa-bars" style="margin-right: 8px;"></i> Outros
             </button>
-            <div id="outros" style="display: none;">
+            <div id="outros" style="display:none;">
                 <a href="/Login">Login</a>
                 <a href="#">Ofertas</a>
                 <a href="#">Proprietário</a>
@@ -174,23 +125,31 @@
         <h2>Bem-vindo ao MyHOUSE!</h2>
         <p>Mais que uma empresa inovadora, um conceito: casas cheias de tecnologia, estilo e personalidade.</p>
 
-        <div class="imagem-container" id="imagemContainer" style="display: none;">
-            <img id="imagemCasa" src="" alt="Imagem da Casa Selecionada">
+        <div class="imagem-container" id="imagemContainer" style="display:none;">
+            <img id="imagemCasa" src="" alt="Imagem da Casa Selecionada" />
             <br />
-            <a href="/Personalizar" class="personalizar-btn">Personalizar</a>
+            <a id="btnPersonalizar" href="#" class="personalizar-btn">Personalizar</a>
         </div>
     </div>
 
     <script>
         function toggleMenu(id) {
             const el = document.getElementById(id);
-            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
         }
 
         function mostrarImagem(nomeImagem) {
             const imagem = document.getElementById('imagemCasa');
-            imagem.src = `/images/casas/${nomeImagem}`;
-            document.getElementById('imagemContainer').style.display = 'block';
+            const container = document.getElementById('imagemContainer');
+            const btnPersonalizar = document.getElementById('btnPersonalizar');
+
+            if(imagem && container && btnPersonalizar){
+                imagem.src = `/images/casas/${nomeImagem}`;
+                container.style.display = 'block';
+
+                // Passa a imagem selecionada na query string para a página de personalizar
+                btnPersonalizar.href = `/Personalizar?imagemCasa=/images/casas/${nomeImagem}`;
+            }
         }
     </script>
 

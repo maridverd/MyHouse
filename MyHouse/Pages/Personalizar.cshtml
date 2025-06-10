@@ -2,16 +2,17 @@
 @model PersonalizarModel
 @{
     ViewData["Title"] = "Personalizar Casa";
-    var imagemCasa = Model.ImagemCasa;
+
+    var imagemCasa = Request.Query["imagemCasa"].ToString();
 }
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"]</title>
+    <title>MyHOUSE - @ViewData["Title"]</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
     <style>
         html, body {
             height: 100%;
@@ -19,33 +20,27 @@
             font-family: Arial, sans-serif;
             background-color: #ccc;
         }
-
         .sidebar {
             position: fixed;
-            left: 0;
-            top: 0;
+            left: 0; top: 0;
             width: 200px;
             height: 100%;
             background-color: rgba(228, 222, 210, 0.9);
             padding-top: 20px;
         }
-
         .logo {
             text-align: center;
             margin-bottom: 30px;
         }
-
         .logo img {
             width: 150px;
         }
-
         .menu {
             display: flex;
             flex-direction: column;
             gap: 10px;
             padding: 0 20px;
         }
-
         .menu button {
             background-color: #00a86b;
             color: white;
@@ -56,81 +51,49 @@
             cursor: pointer;
             text-align: left;
             transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
             width: 100%;
         }
-
         .menu button:hover {
             background-color: #007e52;
             transform: translateY(-1px);
         }
-
-        .menu div.submenu {
-            display: none;
-            margin-left: 10px;
+        .submenu {
+            margin-left: 15px;
             margin-top: 5px;
+            background: #d9d7d1;
+            border-radius: 8px;
+            padding: 10px;
         }
-
-        .menu div.submenu button {
-            background-color: #009a5a;
+        .submenu label {
+            display: block;
+            margin: 6px 0;
             font-size: 14px;
-            margin-top: 5px;
-            width: 100%;
+            cursor: pointer;
         }
-
-        .menu div.submenu button:hover {
-            background-color: #006a3a;
-            transform: none;
-        }
-
         .content {
             margin-left: 220px;
             padding: 20px;
             color: #333;
+            max-width: 900px;
         }
-
-        .imagem-container {
-            margin-bottom: 20px;
-        }
-
         .imagem-container img {
-            max-width: 100%;
-            width: 500px;
-            height: auto;
+            max-width: 500px;
             border-radius: 10px;
             box-shadow: 0 0 8px rgba(0,0,0,0.3);
         }
-
-        .categoria {
-            margin-bottom: 20px;
-            background: #eee;
-            border-radius: 8px;
-            padding: 10px 15px;
-        }
-
-        .categoria h3 {
-            cursor: pointer;
-            margin: 0;
-            user-select: none;
-        }
-
-        .categoria-content {
-            margin-top: 10px;
-            display: none;
-        }
-
-        .categoria-content button {
-            margin: 5px 8px 5px 0;
-            padding: 8px 14px;
+        .btn-salvar {
+            margin-top: 20px;
+            padding: 12px 30px;
             background-color: #00a86b;
             border: none;
+            border-radius: 6px;
             color: white;
-            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
-        .categoria-content button:hover {
+        .btn-salvar:hover {
             background-color: #007e52;
         }
     </style>
@@ -144,22 +107,31 @@
         </div>
 
         <div class="menu">
-            <button onclick="toggleMenu('casas')"><i class="fas fa-home" style="margin-right: 8px;"></i> Casas</button>
-            <div id="casas" class="submenu">
-                <button>D150</button>
-                <button>D170</button>
-                <button>D190</button>
-                <button>D270</button>
-                <button>D290</button>
+            <button type="button" onclick="toggleMenu('automacao')">Automação e Segurança <i class="fas fa-chevron-down"></i></button>
+            <div id="automacao" class="submenu" style="display:none;">
+                <label><input type="checkbox" name="personalizacao" value="Alarme" /> Alarme</label>
+                <label><input type="checkbox" name="personalizacao" value="Câmeras" /> Câmeras</label>
+                <label><input type="checkbox" name="personalizacao" value="Fechadura Digital" /> Fechadura Digital</label>
             </div>
 
-            <button onclick="toggleMenu('outros')"><i class="fas fa-bars" style="margin-right: 8px;"></i> Outros</button>
-            <div id="outros" class="submenu">
-                <button onclick="location.href='/Login'">Login</button>
-                <button>Ofertas</button>
-                <button>Proprietário</button>
-                <button>Conheça a SIConTech</button>
-                <button>Institucional</button>
+            <button type="button" onclick="toggleMenu('sanitario')">Sanitário <i class="fas fa-chevron-down"></i></button>
+            <div id="sanitario" class="submenu" style="display:none;">
+                <label><input type="checkbox" name="personalizacao" value="Ducha Higiênica" /> Ducha Higiênica</label>
+                <label><input type="checkbox" name="personalizacao" value="Vaso Inteligente" /> Vaso Inteligente</label>
+                <label><input type="checkbox" name="personalizacao" value="Lavatório Duplo" /> Lavatório Duplo</label>
+            </div>
+
+            <button type="button" onclick="toggleMenu('climatizacao')">Climatização <i class="fas fa-chevron-down"></i></button>
+            <div id="climatizacao" class="submenu" style="display:none;">
+                <label><input type="checkbox" name="personalizacao" value="Ar-condicionado Split" /> Ar-condicionado Split</label>
+                <label><input type="checkbox" name="personalizacao" value="Ventilação Natural" /> Ventilação Natural</label>
+            </div>
+
+            <button type="button" onclick="toggleMenu('acabamentos')">Acabamentos <i class="fas fa-chevron-down"></i></button>
+            <div id="acabamentos" class="submenu" style="display:none;">
+                <label><input type="checkbox" name="personalizacao" value="Piso Vinílico" /> Piso Vinílico</label>
+                <label><input type="checkbox" name="personalizacao" value="Revestimento 3D" /> Revestimento 3D</label>
+                <label><input type="checkbox" name="personalizacao" value="Teto Rebaixado" /> Teto Rebaixado</label>
             </div>
         </div>
     </div>
@@ -167,70 +139,29 @@
     <div class="content">
         <h2>Personalize sua Casa</h2>
 
-        <div class="imagem-container">
-            @if (!string.IsNullOrEmpty(imagemCasa))
-            {
+        @if (!string.IsNullOrEmpty(imagemCasa))
+        {
+            <div class="imagem-container">
                 <img src="@imagemCasa" alt="Imagem da Casa Selecionada" />
-            }
-            else
-            {
-                <p>Nenhuma imagem selecionada.</p>
-            }
-        </div>
-
-        <div class="categoria">
-            <h3 onclick="toggleCategoria(this)">Automação e Segurança <i class="fas fa-chevron-down" style="float:right;"></i></h3>
-            <div class="categoria-content">
-                <button>Alarme</button>
-                <button>Câmeras</button>
-                <button>Fechadura Digital</button>
             </div>
-        </div>
+        }
+        else
+        {
+            <p>Nenhuma imagem selecionada.</p>
+        }
 
-        <div class="categoria">
-            <h3 onclick="toggleCategoria(this)">Sanitário <i class="fas fa-chevron-down" style="float:right;"></i></h3>
-            <div class="categoria-content">
-                <button>Ducha Higiênica</button>
-                <button>Vaso Inteligente</button>
-                <button>Lavatório Duplo</button>
+        <form method="post" action="/SalvarPersonalizacao">
+            <input type="hidden" name="imagemCasa" value="@imagemCasa" />
+            <div style="margin-top: 20px;">
+                <button type="submit" class="btn-salvar">Salvar Personalização</button>
             </div>
-        </div>
-
-        <div class="categoria">
-            <h3 onclick="toggleCategoria(this)">Climatização <i class="fas fa-chevron-down" style="float:right;"></i></h3>
-            <div class="categoria-content">
-                <button>Ar-condicionado Split</button>
-                <button>Ventilação Natural</button>
-            </div>
-        </div>
-
-        <div class="categoria">
-            <h3 onclick="toggleCategoria(this)">Acabamentos <i class="fas fa-chevron-down" style="float:right;"></i></h3>
-            <div class="categoria-content">
-                <button>Piso Vinílico</button>
-                <button>Revestimento 3D</button>
-                <button>Teto Rebaixado</button>
-            </div>
-        </div>
+        </form>
     </div>
 
     <script>
         function toggleMenu(id) {
             const el = document.getElementById(id);
-            if (!el) return;
-            el.style.display = el.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function toggleCategoria(header) {
-            const content = header.nextElementSibling;
-            if (!content) return;
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-                header.querySelector('i').classList.replace('fa-chevron-up', 'fa-chevron-down');
-            } else {
-                content.style.display = 'block';
-                header.querySelector('i').classList.replace('fa-chevron-down', 'fa-chevron-up');
-            }
+            el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
         }
     </script>
 
