@@ -24,7 +24,7 @@ a {
 }
 
 .border-top {
-    border-top: 1px solid #E4DED2;
+    border-top: 1px solid white;
 }
 .border-bottom {
     border-bottom: 1px solid #E4DED2;
@@ -40,8 +40,13 @@ button.accept-policy {
 }
 
 .footer {
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 40px;
+    background: #E4DED2; /* Optional: for visibility */
+    color: #555;
+    text-align: center;
 }
+
