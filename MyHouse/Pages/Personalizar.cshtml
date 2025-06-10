@@ -2,101 +2,168 @@
 @model PersonalizarModel
 @{
     ViewData["Title"] = "Personalizar Casa";
+
+    var imagemCasa = Request.Query["imagemCasa"].ToString();
 }
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="utf-8" />
-    <title>@ViewData["Title"] - MyHOUSE</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MyHOUSE - @ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #eee;
+        html, body {
+            height: 100%;
             margin: 0;
-            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #ccc;
         }
-
-        h1 {
-            color: #00a86b;
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0;
+            width: 200px;
+            height: 100%;
+            background-color: rgba(228, 222, 210, 0.9);
+            padding-top: 20px;
+        }
+        .logo {
+            text-align: center;
             margin-bottom: 30px;
         }
-
-        .categoria-container {
+        .logo img {
+            width: 150px;
+        }
+        .menu {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+            flex-direction: column;
+            gap: 10px;
+            padding: 0 20px;
         }
-
-        .categoria {
-            background-color: white;
-            border-radius: 10px;
+        .menu button {
+            background-color: #00a86b;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            width: 100%;
+        }
+        .menu button:hover {
+            background-color: #007e52;
+            transform: translateY(-1px);
+        }
+        .submenu {
+            margin-left: 15px;
+            margin-top: 5px;
+            background: #d9d7d1;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .submenu label {
+            display: block;
+            margin: 6px 0;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .content {
+            margin-left: 220px;
             padding: 20px;
-            flex: 1 1 200px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-
-        .categoria:hover {
-            transform: scale(1.02);
-        }
-
-        .categoria h2 {
             color: #333;
-            margin-top: 0;
-            font-size: 20px;
-            border-bottom: 2px solid #00a86b;
-            padding-bottom: 10px;
+            max-width: 900px;
         }
-
-        .categoria ul {
-            padding-left: 20px;
+        .imagem-container img {
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.3);
         }
-
-        .categoria ul li {
-            margin-bottom: 5px;
+        .btn-salvar {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background-color: #00a86b;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-salvar:hover {
+            background-color: #007e52;
         }
     </style>
 </head>
 <body>
-    <h1>Personalize sua Casa</h1>
-    <div class="categoria-container">
-        <div class="categoria">
-            <h2>Automação e Segurança</h2>
-            <ul>
-                <li>Fechadura digital</li>
-                <li>Câmeras de segurança</li>
-                <li>Sistema de alarme</li>
-                <li>Controle por app</li>
-            </ul>
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="~/images/MyHouseLogo.png" alt="Logo MyHOUSE" />
+            <p>By SIConTech</p>
         </div>
-        <div class="categoria">
-            <h2>Sanitário</h2>
-            <ul>
-                <li>Louças premium</li>
-                <li>Metais modernos</li>
-                <li>Ducha higiênica</li>
-                <li>Economia de água</li>
-            </ul>
-        </div>
-        <div class="categoria">
-            <h2>Climatização</h2>
-            <ul>
-                <li>Infra para ar-condicionado</li>
-                <li>Ventilação cruzada</li>
-                <li>Isolamento térmico</li>
-                <li>Janelas com controle solar</li>
-            </ul>
-        </div>
-        <div class="categoria">
-            <h2>Acabamentos</h2>
-            <ul>
-                <li>Pisos vinílicos</li>
-                <li>Revestimentos 3D</li>
-                <li>Tintas laváveis</li>
-                <li>Rodapés embutidos</li>
-            </ul>
+
+        <div class="menu">
+            <button type="button" onclick="toggleMenu('automacao')">Automação e Segurança <i class="fas fa-chevron-down"></i></button>
+            <div id="automacao" class="submenu" style="display:none;">
+                <label><input type="checkbox" name="personalizacao" value="Alarme" /> Alarme</label>
+                <label><input type="checkbox" name="personalizacao" value="Câmeras" /> Câmeras</label>
+                <label><input type="checkbox" name="personalizacao" value="Fechadura Digital" /> Fechadura Digital</label>
+            </div>
+
+            <button type="button" onclick="toggleMenu('sanitario')">Sanitário <i class="fas fa-chevron-down"></i></button>
+            <div id="sanitario" class="submenu" style="display:none;">
+                <label><input type="checkbox" name="personalizacao" value="Ducha Higiênica" /> Ducha Higiênica</label>
+                <label><input type="checkbox" name="personalizacao" value="Vaso Inteligente" /> Vaso Inteligente</label>
+                <label><input type="checkbox" name="personalizacao" value="Lavatório Duplo" /> Lavatório Duplo</label>
+            </div>
+
+            <button type="button" onclick="toggleMenu('climatizacao')">Climatização <i class="fas fa-chevron-down"></i></button>
+            <div id="climatizacao" class="submenu" style="display:none;">
+                <label><input type="checkbox" name="personalizacao" value="Ar-condicionado Split" /> Ar-condicionado Split</label>
+                <label><input type="checkbox" name="personalizacao" value="Ventilação Natural" /> Ventilação Natural</label>
+            </div>
+
+            <button type="button" onclick="toggleMenu('acabamentos')">Acabamentos <i class="fas fa-chevron-down"></i></button>
+            <div id="acabamentos" class="submenu" style="display:none;">
+                <label><input type="checkbox" name="personalizacao" value="Piso Vinílico" /> Piso Vinílico</label>
+                <label><input type="checkbox" name="personalizacao" value="Revestimento 3D" /> Revestimento 3D</label>
+                <label><input type="checkbox" name="personalizacao" value="Teto Rebaixado" /> Teto Rebaixado</label>
+            </div>
         </div>
     </div>
+
+    <div class="content">
+        <h2>Personalize sua Casa</h2>
+
+        @if (!string.IsNullOrEmpty(imagemCasa))
+        {
+            <div class="imagem-container">
+                <img src="@imagemCasa" alt="Imagem da Casa Selecionada" />
+            </div>
+        }
+        else
+        {
+            <p>Nenhuma imagem selecionada.</p>
+        }
+
+        <form method="post" action="/SalvarPersonalizacao">
+            <input type="hidden" name="imagemCasa" value="@imagemCasa" />
+            <div style="margin-top: 20px;">
+                <button type="submit" class="btn-salvar">Salvar Personalização</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function toggleMenu(id) {
+            const el = document.getElementById(id);
+            el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+        }
+    </script>
+
 </body>
 </html>
