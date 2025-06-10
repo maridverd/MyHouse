@@ -2,7 +2,6 @@
 @model PersonalizarModel
 @{
     ViewData["Title"] = "Personalizar Casa";
-
     var imagemCasa = Request.Query["imagemCasa"].ToString();
 }
 
@@ -27,6 +26,7 @@
             height: 100%;
             background-color: rgba(228, 222, 210, 0.9);
             padding-top: 20px;
+            overflow-y: auto;
         }
         .logo {
             text-align: center;
@@ -150,8 +150,10 @@
             <p>Nenhuma imagem selecionada.</p>
         }
 
-        <form method="post" action="/SalvarPersonalizacao">
+        <form method="post">
             <input type="hidden" name="imagemCasa" value="@imagemCasa" />
+
+            <!-- Aqui ficam os checkboxes de personalização no form -->
             <div style="margin-top: 20px;">
                 <button type="submit" class="btn-salvar">Salvar Personalização</button>
             </div>
