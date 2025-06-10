@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyHOUSE</title>
+    <link rel="stylesheet" href="~/Pages/Shared/_Layout.cshtml.css" />
     <style>
         body {
             margin: 0;
@@ -84,18 +85,23 @@
             <p>By SIConTech</p>
         </div>
         <div class="menu">
-            <h3>Casas</h3>
-            <a href="">D150</a>
-            <a href="#">D170</a>
-            <a href="#">D190</a>
-            <a href="#">D270</a>
-            <a href="#">D290</a>
-            <h3>Outros</h3>
-            <a href="/Login">Login</a>
-            <a href="#">Ofertas</a>
-            <a href="#">Proprietário</a>
-            <a href="#">Conheça a SIConTech</a>
-            <a href="#">Institucional</a>
+            <button onclick="toggleMenu('casas')">Casas</button>
+            <div id="casas" style="display: none;">
+                <a href="#">D150</a>
+                <a href="#">D170</a>
+                <a href="#">D190</a>
+                <a href="#">D270</a>
+                <a href="#">D290</a>
+            </div>
+
+            <button onclick="toggleMenu('outros')">Outros</button>
+            <div id="outros" style="display: none;">
+                <a href="/Login">Login</a>
+                <a href="#">Ofertas</a>
+                <a href="#">Proprietário</a>
+                <a href="#">Conheça a SIConTech</a>
+                <a href="#">Institucional</a>
+            </div>
         </div>
     </div>
 
@@ -103,6 +109,14 @@
         <h2>Bem-vindo ao MyHOUSE!</h2>
         <p>Mais que uma empresa inovadora, um conceito: casas cheias de tecnologia, estilo e personalidade. Nossos produtos pretendem criar espaços que refletem a individualidade de cada cliente, combinando funcionalidade e beleza, com tecnologia e muita inovação.</p>
     </div>
+
+    <script>
+    function toggleMenu(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+    </script>
 
 </body>
 </html>
