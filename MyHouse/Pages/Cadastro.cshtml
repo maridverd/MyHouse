@@ -1,0 +1,72 @@
+@page
+@model CadastroModel
+@{
+    ViewData["Title"] = "Criar Conta - MyHouse";
+}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - MyHouse</title>
+    <link rel="stylesheet" href="~/style.css" />
+</head>
+<body>
+    <div class="top-bar">
+        <img src="~/images/myHouseLogo.jpg" alt="Logo" class="top-bar-logo">
+    </div>
+    <div class="signup-container">
+        <form class="signup-form" method="post">
+            <h2>Cria Sua Conta</h2>
+
+            <div class="form-group">
+                <label asp-for="PrimeiroNome">Primeiro Nome</label>
+                <input asp-for="PrimeiroNome" type="text" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UltimoNome">Último Nome</label>
+                <input asp-for="UltimoNome" type="text" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CPF">CPF</label>
+                <input asp-for="CPF" type="text" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Endereco">Endereço</label>
+                <input asp-for="Endereco" type="text" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Senha">Senha</label>
+                <input asp-for="Senha" type="password" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ConfirmaSenha">Confirma Senha</label>
+                <input asp-for="ConfirmaSenha" type="password" required />
+            </div>
+
+            <button type="submit" class="btn-signup">Cadastrar</button>
+
+            <p class="login-link">Já possui uma conta? <a href="/Login">Log In</a></p>
+
+            @if (Model.Mensagens?.Any() == true)
+            {
+                <ul class="validation-messages">
+                    @foreach (var msg in Model.Mensagens)
+                    {
+                        <li>@msg.Mensagem</li>
+                    }
+                </ul>
+            }
+        </form>
+    </div>
+</body>
+</html>

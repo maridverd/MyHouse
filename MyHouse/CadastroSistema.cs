@@ -29,22 +29,27 @@ public static class CadastroSistema {
 
     static CadastroSistema() {
         CarregarDados();
+        if (Usuarios == null) Usuarios = new();
     }
 
     // Carrega os dados existentes do arquivo JSON
     private static void CarregarDados() {
         if (!File.Exists(ArquivoUsuarios)) {
-            Log.WriteLine("Sem arquivo");
+            Log.Instance.WriteLine("Sem arquivo");
             File.Create(ArquivoUsuarios);
             Usuarios = new();
             return;
         }
         else {
             try {
-                Usuarios = JsonSerializer.Deserialize<Dictionary<string, Usuario>>(File.ReadAllText(ArquivoUsuarios));
+                Usuarios = JsonSerializer.Deserialize<Dictionary<string, Usuario>>(File.ReadAllText(ArquivoUsuarios))!;
             }
             catch (JsonException jsonException) {
-                Log.WriteLine($"Json Exception: {jsonException}. Creating empty dictionary instead");
+                Log.Instance.WriteLine($"Json Exception: {jsonException}. Creating empty dictionary instead");
+                Usuarios = new();
+            }
+            catch (Exception exception) {
+                Log.Instance.WriteLine($"Exception: {exception}. Creating empty dictionary instead");
                 Usuarios = new();
             }
         }
@@ -57,32 +62,37 @@ public static class CadastroSistema {
     //     if (senha.)
     // }
 
-    public static List<CodigoRetorno> CadastrarUsuario(Email email, string senha, Nome nome, CPF cpf, string endereco) {
+    public static List<CodigoRetorno> CadastrarUsuario(string email, string senha, Nome nome, string cpf, string endereco) {
         List<CodigoRetorno> codigos = new();
-        if (!email.Valido) {
-            codigos.Add(new(1, "Email inválido."));
-        }
-        if (!cpf.Valido) {
-            codigos.Add(new(2, "CPF inválido."));
-        }
-        if (codigos.Count == 0) {
-            if (Usuarios.ContainsKey(email)) {
-                codigos.Add(new(3, "Usuário já cadastrado."));
+        if (email != null && senha != null && cpf != null && endereco != null) {
+            if (!Usuario.ValidarEmail(email)) {
+                codigos.Add(new(1, "Email inválido."));
             }
-            else {
-                Usuarios.Add(email, new Usuario(email, new Senha(senha), nome, cpf, endereco));
-                codigos.Add(new(0, "Usuário cadastrado com sucesso."));
+            if (!Usuario.ValidarCPF(cpf)) {
+                codigos.Add(new(2, "CPF inválido."));
             }
+            if (codigos.Count == 0) {
+                if (Usuarios.ContainsKey(email)) {
+                    codigos.Add(new(3, "Usuário já cadastrado."));
+                }
+                else {
+                    Usuarios.Add(email, new Usuario(email, new Senha(senha), nome, cpf, endereco));
+                    codigos.Add(new(0, "Usuário cadastrado com sucesso."));
+                }
+            }
+        }
+        else {
+            codigos.Add(new(4, "Informações nulas."));
         }
         return codigos;
     }
 
-    public static bool AutenticaUsuario(Email email, string senha) {
+    public static bool AutenticaUsuario(string email, string senha) {
         Usuario usuario;
-        if (!Usuarios.TryGetValue(email, out usuario)) {
+        if (!Usuarios.TryGetValue(email, out usuario!)) {
             return false;
         }
-        return Usuarios[email].Senha.Validate(senha);
+        return usuario.Senha.Validate(senha);
     }
 
     // Salva os dados atualizados no arquivo JSON
