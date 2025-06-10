@@ -2,101 +2,237 @@
 @model PersonalizarModel
 @{
     ViewData["Title"] = "Personalizar Casa";
+    var imagemCasa = Model.ImagemCasa;
 }
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="utf-8" />
-    <title>@ViewData["Title"] - MyHOUSE</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #eee;
+        html, body {
+            height: 100%;
             margin: 0;
-            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #ccc;
         }
 
-        h1 {
-            color: #00a86b;
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            background-color: rgba(228, 222, 210, 0.9);
+            padding-top: 20px;
+        }
+
+        .logo {
+            text-align: center;
             margin-bottom: 30px;
         }
 
-        .categoria-container {
+        .logo img {
+            width: 150px;
+        }
+
+        .menu {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+            flex-direction: column;
+            gap: 10px;
+            padding: 0 20px;
+        }
+
+        .menu button {
+            background-color: #00a86b;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            width: 100%;
+        }
+
+        .menu button:hover {
+            background-color: #007e52;
+            transform: translateY(-1px);
+        }
+
+        .menu div.submenu {
+            display: none;
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+
+        .menu div.submenu button {
+            background-color: #009a5a;
+            font-size: 14px;
+            margin-top: 5px;
+            width: 100%;
+        }
+
+        .menu div.submenu button:hover {
+            background-color: #006a3a;
+            transform: none;
+        }
+
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+            color: #333;
+        }
+
+        .imagem-container {
+            margin-bottom: 20px;
+        }
+
+        .imagem-container img {
+            max-width: 100%;
+            width: 500px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.3);
         }
 
         .categoria {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            flex: 1 1 200px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+            margin-bottom: 20px;
+            background: #eee;
+            border-radius: 8px;
+            padding: 10px 15px;
         }
 
-        .categoria:hover {
-            transform: scale(1.02);
+        .categoria h3 {
+            cursor: pointer;
+            margin: 0;
+            user-select: none;
         }
 
-        .categoria h2 {
-            color: #333;
-            margin-top: 0;
-            font-size: 20px;
-            border-bottom: 2px solid #00a86b;
-            padding-bottom: 10px;
+        .categoria-content {
+            margin-top: 10px;
+            display: none;
         }
 
-        .categoria ul {
-            padding-left: 20px;
+        .categoria-content button {
+            margin: 5px 8px 5px 0;
+            padding: 8px 14px;
+            background-color: #00a86b;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .categoria ul li {
-            margin-bottom: 5px;
+        .categoria-content button:hover {
+            background-color: #007e52;
         }
     </style>
 </head>
 <body>
-    <h1>Personalize sua Casa</h1>
-    <div class="categoria-container">
-        <div class="categoria">
-            <h2>Automação e Segurança</h2>
-            <ul>
-                <li>Fechadura digital</li>
-                <li>Câmeras de segurança</li>
-                <li>Sistema de alarme</li>
-                <li>Controle por app</li>
-            </ul>
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="~/images/MyHouseLogo.png" alt="Logo MyHOUSE" />
+            <p>By SIConTech</p>
         </div>
-        <div class="categoria">
-            <h2>Sanitário</h2>
-            <ul>
-                <li>Louças premium</li>
-                <li>Metais modernos</li>
-                <li>Ducha higiênica</li>
-                <li>Economia de água</li>
-            </ul>
-        </div>
-        <div class="categoria">
-            <h2>Climatização</h2>
-            <ul>
-                <li>Infra para ar-condicionado</li>
-                <li>Ventilação cruzada</li>
-                <li>Isolamento térmico</li>
-                <li>Janelas com controle solar</li>
-            </ul>
-        </div>
-        <div class="categoria">
-            <h2>Acabamentos</h2>
-            <ul>
-                <li>Pisos vinílicos</li>
-                <li>Revestimentos 3D</li>
-                <li>Tintas laváveis</li>
-                <li>Rodapés embutidos</li>
-            </ul>
+
+        <div class="menu">
+            <button onclick="toggleMenu('casas')"><i class="fas fa-home" style="margin-right: 8px;"></i> Casas</button>
+            <div id="casas" class="submenu">
+                <button>D150</button>
+                <button>D170</button>
+                <button>D190</button>
+                <button>D270</button>
+                <button>D290</button>
+            </div>
+
+            <button onclick="toggleMenu('outros')"><i class="fas fa-bars" style="margin-right: 8px;"></i> Outros</button>
+            <div id="outros" class="submenu">
+                <button onclick="location.href='/Login'">Login</button>
+                <button>Ofertas</button>
+                <button>Proprietário</button>
+                <button>Conheça a SIConTech</button>
+                <button>Institucional</button>
+            </div>
         </div>
     </div>
+
+    <div class="content">
+        <h2>Personalize sua Casa</h2>
+
+        <div class="imagem-container">
+            @if (!string.IsNullOrEmpty(imagemCasa))
+            {
+                <img src="@imagemCasa" alt="Imagem da Casa Selecionada" />
+            }
+            else
+            {
+                <p>Nenhuma imagem selecionada.</p>
+            }
+        </div>
+
+        <div class="categoria">
+            <h3 onclick="toggleCategoria(this)">Automação e Segurança <i class="fas fa-chevron-down" style="float:right;"></i></h3>
+            <div class="categoria-content">
+                <button>Alarme</button>
+                <button>Câmeras</button>
+                <button>Fechadura Digital</button>
+            </div>
+        </div>
+
+        <div class="categoria">
+            <h3 onclick="toggleCategoria(this)">Sanitário <i class="fas fa-chevron-down" style="float:right;"></i></h3>
+            <div class="categoria-content">
+                <button>Ducha Higiênica</button>
+                <button>Vaso Inteligente</button>
+                <button>Lavatório Duplo</button>
+            </div>
+        </div>
+
+        <div class="categoria">
+            <h3 onclick="toggleCategoria(this)">Climatização <i class="fas fa-chevron-down" style="float:right;"></i></h3>
+            <div class="categoria-content">
+                <button>Ar-condicionado Split</button>
+                <button>Ventilação Natural</button>
+            </div>
+        </div>
+
+        <div class="categoria">
+            <h3 onclick="toggleCategoria(this)">Acabamentos <i class="fas fa-chevron-down" style="float:right;"></i></h3>
+            <div class="categoria-content">
+                <button>Piso Vinílico</button>
+                <button>Revestimento 3D</button>
+                <button>Teto Rebaixado</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function toggleCategoria(header) {
+            const content = header.nextElementSibling;
+            if (!content) return;
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                header.querySelector('i').classList.replace('fa-chevron-up', 'fa-chevron-down');
+            } else {
+                content.style.display = 'block';
+                header.querySelector('i').classList.replace('fa-chevron-down', 'fa-chevron-up');
+            }
+        }
+    </script>
+
 </body>
 </html>
