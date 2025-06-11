@@ -1,24 +1,6 @@
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace MyHouse;
-
-public struct Senha {
-    [JsonInclude]
-    public string HashSenha;
-    [JsonInclude]
-    public string Sal;
-    public Senha(string senha) {
-        Sal = Convert.ToBase64String(RandomNumberGenerator.GetBytes(16));
-        senha += Sal;
-        HashSenha = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(senha)));
-    }
-    public readonly bool Validate(string senha) {
-        return Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(senha + Sal))) == HashSenha;
-    }
-}
 
 public static class CadastroSistema {
     private static readonly string ArquivoUsuarios = "usuarios.json";

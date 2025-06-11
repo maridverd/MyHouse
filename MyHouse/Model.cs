@@ -1,13 +1,10 @@
 ﻿using System.Text.Json;
-public class Model
-{
+public class Modelo {
     public string? Id { get; init; } // identificador do modelo
     private int _sales;
-    public int Sales
-    {
+    public int Sales {
         get => _sales;
-        set
-        {
+        set {
             if (value < _sales)
                 throw new ArgumentException("O número de vendas só pode aumentar");
             _sales = value;
@@ -18,8 +15,7 @@ public class Model
     public bool Avaiable { get; set; } // Se o modelo está disponível para venda
 
     // Construtor
-    public Model(string? id, int sales, decimal price, bool avaiable)
-    {
+    public Modelo(string? id, int sales, decimal price, bool avaiable) {
         Id = id;
         Sales = sales;
         Price = price;
@@ -27,34 +23,29 @@ public class Model
     }
 
     // Método para instanciar models a partir do json (passa o id que ele retorna o json)
-    public static Model Create(string? id)
-    {
-        try
-        {
+    public static Modelo Create(string? id) {
+        try {
             string jsonPath = $"Values/{id}.json";
             string jsonString = File.ReadAllText(jsonPath);
-            Model? aux = JsonSerializer.Deserialize<Model>(jsonString);
+            Modelo? aux = JsonSerializer.Deserialize<Modelo>(jsonString);
 
             if (aux != null)
                 return aux;
             else
                 throw new Exception($"O arquivo {jsonPath} está vazio");
         }
-        catch (FileNotFoundException ex)
-        {
+        catch (FileNotFoundException ex) {
             Console.WriteLine($"Arquivo não encontrado: {ex}");
-            return new Model(String.Empty, 0, 0, false);
+            return new Modelo(String.Empty, 0, 0, false);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             Console.WriteLine($"Erro inesperado: {ex}");
-            return new Model(String.Empty, 0, 0, false);
+            return new Modelo(String.Empty, 0, 0, false);
         }
     }
 
     // Guarda as novas informações no json, deve ser chamado quando o Model atual não for mais modificado
-    public void Store()
-    {
+    public void Store() {
         try
         {
             // Caminho do arquivo
