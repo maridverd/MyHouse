@@ -15,7 +15,7 @@ public class JsonDict<TKey, TValue> {
     // Carrega os dados existentes do arquivo JSON
     private void CarregarDados() {
         if (!File.Exists(CaminhoArquivo)) {
-            Log.Instance.WriteLine("Sem arquivo");
+            Log.Instance.WriteLine($"Sem arquivo {CaminhoArquivo}");
             File.WriteAllText(CaminhoArquivo, "{}");
             Data = new();
             return;
@@ -27,11 +27,10 @@ public class JsonDict<TKey, TValue> {
             }
             catch (JsonException jsonException) {
                 Log.Instance.WriteLine($"Json Exception: {jsonException}. Backing up and creating empty dictionary instead");
+                File.WriteAllText(CaminhoArquivo + "backup", FileContent);
             }
             catch (Exception exception) {
                 Log.Instance.WriteLine($"Exception: {exception}. Backing up and creating empty dictionary instead");
-            }
-            finally {
                 File.WriteAllText(CaminhoArquivo + "backup", FileContent);
             }
         }
