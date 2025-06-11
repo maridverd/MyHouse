@@ -8,7 +8,7 @@
 
 <hr />
 
-@foreach (KeyValuePair<int, Pergunta> pergunta in Model.Perguntas.Data)
+@foreach (KeyValuePair<int, Pergunta> pergunta in Model.Perguntas!.Data)
 {
     @if (pergunta.Value.Resposta is not null) {
     <div>

@@ -17,11 +17,6 @@ public class FaqModel : PageModel{
     // public int PerguntaId { get; set; }
 
     // public List<Pergunta> Perguntas { get; set; }
-    public JsonDict<int, Pergunta>? Perguntas{ get; private set; }
-    public JsonDict<int, Resposta>? Respostas{ get; private set; }
-
-    public void OnGet() {
-        Perguntas = new("perguntas.json");
-        Respostas = new("respostas.json");
-    }
+    public JsonDict<int, Pergunta>? Perguntas{ get; private set; } = new("perguntas.json");
+    public JsonDict<int, Resposta>? Respostas{ get; private set; } = new("respostas.json");
 }
