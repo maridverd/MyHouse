@@ -3,14 +3,16 @@ using System.Text.Json.Serialization;
 namespace MyHouse;
 
 public class Pergunta {
-    [JsonInclude, JsonPropertyName("pergunta")]
-    private readonly string _Pergunta;
+    private static int cont = 0;
+    public readonly string Texto;
     [JsonInclude]
     public readonly DateTime Hora;
+    public readonly long Id;
     public Usuario Usuario { get; private set; }
     public Resposta? Resposta { get; private set; }
-    public Pergunta(string pergunta, DateTime hora, Usuario usuario) {
-        _Pergunta = pergunta;
+    public Pergunta(string texto, DateTime hora, Usuario usuario) {
+        Id = cont++;
+        Texto = texto;
         Hora = hora;
         Usuario = usuario;
     }
