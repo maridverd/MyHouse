@@ -4,7 +4,7 @@ public static class CadastroSistema {
     private static readonly string ArquivoUsuarios = "usuarios.json";
     public static JsonDict<string, Usuario> Usuarios { get; private set; }
 
-    public static Usuario? Usuario{ get; private set; }
+    public static Usuario? Usuario { get; private set; }
 
     static CadastroSistema() {
         Usuarios = new(ArquivoUsuarios);
@@ -37,10 +37,16 @@ public static class CadastroSistema {
     }
 
     public static bool AutenticaUsuario(string email, string senha) {
-        Usuario usuario;
-        if (!Usuarios.Data.TryGetValue(email, out usuario!)) {
+        if (!Usuarios.Data.TryGetValue(email, out Usuario? usuario)) {
             return false;
         }
-        return usuario.Senha.Validate(senha);
+        if (usuario != null && usuario.Senha.Validate(senha)) {
+            Usuario = usuario;
+            return true;
+        }
+        return false;
+    }
+    public static void Logout() {
+        Usuario = null;
     }
 }

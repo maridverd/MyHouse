@@ -28,10 +28,12 @@ public class JsonDict<TKey, TValue> {
             catch (JsonException jsonException) {
                 Log.Instance.WriteLine($"Json Exception: {jsonException}. Backing up and creating empty dictionary instead");
                 File.WriteAllText(CaminhoArquivo + "backup", FileContent);
+                Data = new();
             }
             catch (Exception exception) {
                 Log.Instance.WriteLine($"Exception: {exception}. Backing up and creating empty dictionary instead");
                 File.WriteAllText(CaminhoArquivo + "backup", FileContent);
+                Data = new();
             }
         }
     }

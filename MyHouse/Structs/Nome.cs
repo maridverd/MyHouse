@@ -13,4 +13,7 @@ public readonly struct Nome {
         PrimeiroNome = primeiroNome;
         UltimoNome = ultimoNome;
     }
+    public override string ToString() {
+        return Completo;
+    }
 }

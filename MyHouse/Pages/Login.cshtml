@@ -1,5 +1,5 @@
 ﻿@page
-@model IndexModel
+@model LoginModel
 @{
     ViewData["Title"] = "Home page";
 }
@@ -15,19 +15,27 @@
         <img src="~/images/myHouseLogo.jpg" alt="Logo" class="top-bar-logo">
     </div>
     <div class="signup-container">
-        <form class="signup-form" action="#" method="POST">
+        <form class="signup-form" method="post">
             <h2>Cria Sua Conta</h2>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" required />
             </div>
             <div class="form-group">
-                <label for="password">Senha</label>
-                <input type="password" id="password" name="password" required>
+                <label asp-for="Senha">Senha</label>
+                <input asp-for="Senha" type="password" required />
             </div>
-            <button type="submit" class="btn-signup">Sign Up</button>
-            <p class="login-link">Já possui uma conta? <a href="#">Log In</a></p>
+            <button type="submit" class="btn-signup">Login</button>
+            <p class="login-link">Não possui uma conta? <a href="/Cadastro">Cadastre-se</a></p>
         </form>
+        @if (Model.Mensagens?.Any() == true) {
+            <ul class="validation-messages">
+                @foreach (var msg in Model.Mensagens)
+                {
+                    <li>@msg.Mensagem</li>
+                }
+            </ul>
+        }
     </div>
 </body>
 </html>

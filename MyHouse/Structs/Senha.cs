@@ -14,6 +14,11 @@ public readonly struct Senha {
         senha += Sal;
         HashSenha = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(senha)));
     }
+    [JsonConstructor]
+    public Senha(string hashSenha, string sal) {
+        HashSenha = hashSenha;
+        Sal = sal;
+    }
     public readonly bool Validate(string senha) {
         return Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(senha + Sal))) == HashSenha;
     }

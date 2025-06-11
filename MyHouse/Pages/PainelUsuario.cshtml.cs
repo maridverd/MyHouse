@@ -1,20 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyHouse.Pages
+namespace MyHouse.Pages;
+
+public class PainelUsuarioModel : PageModel
 {
-    public class PainelUsuarioModel : PageModel
+    public void OnGet()
     {
-        private readonly ILogger<PainelUsuarioModel> _logger;
 
-        public PainelUsuarioModel(ILogger<PainelUsuarioModel> logger)
-        {
-            _logger = logger;
-        }
-
-        public void OnGet()
-        {
-
-        }
     }
 }
