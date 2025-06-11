@@ -2,5 +2,26 @@
   "Id": "1234",
   "Sales": 75,
   "Price": 1,
-  "Avaiable": true
+  "Avaiable": true,
+  
+  "Personalization": {
+    "Automation and security": {
+      "alarme": false,
+      "cameras": false,
+      "fechadura_digital": false
+    },
+    "Bathroom": {
+      "ducha higienica": false,
+      "vaso inteligente": false
+    },
+    "Climate_Control": {
+      "ar-condicionado split": false,
+      "ventilacao natural": false
+    },
+    "Detailing": {
+      "piso vinilico": false,
+      "revestimento 3d": false,
+      "teto rebaixado": false
+    }
+  }
 }
