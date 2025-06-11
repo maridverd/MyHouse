@@ -13,3 +13,11 @@ Site de venda de moradias modulares pré-fabricadas.
    http://localhost:XXXX
 
 4. Para parar a aplicação, use Ctrl+C no terminal.
+
+## Funcionalidades
+ - Usuário efetua cadastro 
+ - Usuário realiza login e logout
+ - Usuário personaliza projeto de moradia
+ - Usuário visualiza ofertas
+ - Administrador pode adicionar modelos (back-end)
+ - Cliente faz perguntas
