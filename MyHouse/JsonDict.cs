@@ -2,12 +2,13 @@ using System.Text.Json;
 
 namespace MyHouse;
 
-public class JsonDict<TKey, TValue> {
+public class JsonDict<TKey, TValue> where TKey : notnull{
     public readonly string CaminhoArquivo;
     public Dictionary<TKey, TValue> Data;
     public JsonDict(string caminhoArquivo) {
         CaminhoArquivo = caminhoArquivo;
         CarregarDados();
+        Data ??= new();
     }
     public void Save() {
         File.WriteAllText(CaminhoArquivo, JsonSerializer.Serialize(Data));
@@ -26,12 +27,12 @@ public class JsonDict<TKey, TValue> {
                 Data = JsonSerializer.Deserialize<Dictionary<TKey, TValue>>(FileContent) ?? new();
             }
             catch (JsonException jsonException) {
-                Log.Instance.WriteLine($"Json Exception: {jsonException}. Backing up and creating empty dictionary instead");
+                Log.Instance.WriteLine($"Json Exception: {jsonException}.\nFile: {CaminhoArquivo}\nBacking up and creating empty dictionary instead");
                 File.WriteAllText(CaminhoArquivo + "backup", FileContent);
                 Data = new();
             }
             catch (Exception exception) {
-                Log.Instance.WriteLine($"Exception: {exception}. Backing up and creating empty dictionary instead");
+                Log.Instance.WriteLine($"Exception: {exception}.\nFile: {CaminhoArquivo}\nBacking up and creating empty dictionary instead");
                 File.WriteAllText(CaminhoArquivo + "backup", FileContent);
                 Data = new();
             }

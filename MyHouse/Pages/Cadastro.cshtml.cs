@@ -37,7 +37,7 @@ public class CadastroModel : PageModel {
 
         if (resultado.Any(r => r.Codigo == 0))
         {
-            CadastroSistema.AutenticaUsuario(Email!, Senha!);
+            CadastroSistema.AutenticaUsuario(Email!, Senha!, HttpContext);
             return RedirectToPage("/PainelUsuario");
         }
 

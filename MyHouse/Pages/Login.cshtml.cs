@@ -14,9 +14,9 @@ public class LoginModel : PageModel{
     public IActionResult OnPost(){
         Mensagens.Clear();
 
-        if (CadastroSistema.AutenticaUsuario(Email, Senha)) {
+        if (CadastroSistema.AutenticaUsuario(Email, Senha, HttpContext)) {
 
-            // Grava na sessão
+            // Grava na sessï¿½o
             HttpContext.Session.SetString("UsuarioEmail", Email);
             return RedirectToPage("/PainelUsuario");
         }

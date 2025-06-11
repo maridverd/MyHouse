@@ -1,15 +1,15 @@
 ﻿@page
-@model MyHouse.Pages.PergunteAquiModel
+@model MyHouse.Pages.ResponderPerguntasModel
 @{
     ViewData["Title"] = "FAQ Dinâmico";
 }
 
 <h1>Perguntas de Usuários</h1>
 
-<form method="post" asp-page-handler="Pergunta">
+@* <form method="post" asp-page-handler="Pergunta">
     <input asp-for="NovaPergunta" placeholder="Digite sua pergunta" required />
     <button type="submit">Enviar</button>
-</form>
+</form> *@
 
 <hr />
 
@@ -21,16 +21,16 @@
 
         @if (pergunta.Value.Resposta is not null)
         {
-            <p><strong>Resposta:</strong> @pergunta.Value.Resposta.Texto <em>(por @pergunta.Value.Resposta.Suporte.Nome)</em></p>
+            <p><strong>Resposta:</strong> @pergunta.Value.Resposta.Texto <em>(por @pergunta.Value.Resposta.Suporte!.Nome)</em></p>
         }
-        @* else
+        else
         {
             <form method="post" asp-page-handler="Resposta">
                 <input type="hidden" asp-for="PerguntaId" value="@pergunta.Key" />
                 <input asp-for="NovaResposta" placeholder="Sua resposta..." required />
                 <button type="submit">Responder</button>
             </form>
-        } *@
+        }
     </div>
     <hr />
 }

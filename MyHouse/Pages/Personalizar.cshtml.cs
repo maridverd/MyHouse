@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PersonalizarModel : PageModel
 {
     [BindProperty]
-    public string ImagemCasa { get; set; }
+    public string? ImagemCasa { get; set; }
 
     [BindProperty]
     public List<string> Personalizacao { get; set; } = new List<string>();

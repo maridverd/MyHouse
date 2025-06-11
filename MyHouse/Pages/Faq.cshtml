@@ -12,10 +12,9 @@
 {
     @if (pergunta.Value.Resposta is not null) {
     <div>
-        <strong>@pergunta.Value.Texto</strong> — <em>@pergunta.Value.Usuario.Nome</em>
-        <p><small>@pergunta.Value.Hora</small></p>
+        <strong>@pergunta.Value.Texto</strong>
 
-        <p><strong>Resposta:</strong> @pergunta.Value.Resposta.Texto <em>(por @pergunta.Value.Resposta.Suporte.Nome)</em></p>
+        <p><strong>Resposta:</strong> @pergunta.Value.Resposta.Texto</p>
         
     </div>
     <hr />

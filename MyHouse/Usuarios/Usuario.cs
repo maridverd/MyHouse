@@ -13,13 +13,16 @@ public class Usuario {
     public string CPF { get; private set; }
     [JsonInclude]
     public string Endereco { get; private set; }
+    [JsonInclude]
+    public bool IsSuporte { get; private set; }
     [JsonConstructor]
-    public Usuario(string email, Senha senha, Nome nome, string cpf, string endereco) {
+    public Usuario(string email, Senha senha, Nome nome, string cpf, string endereco, bool isSuporte = false) {
         Email = email;
         Senha = senha;
         Nome = nome;
         CPF = cpf;
         Endereco = endereco;
+        IsSuporte = isSuporte;
     }
     public static bool ValidarEmail(string email) {
         return email.Contains('@'); // Colocar lógica de validação do email aqui.
