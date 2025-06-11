@@ -1,5 +1,5 @@
 ## MyHouse 
-Site de venda de moradias modulares pré-fabricadas
+Site de venda de moradias modulares pré-fabricadas.
 
 ## Manual de instalação
 1. Clone o repositório:
