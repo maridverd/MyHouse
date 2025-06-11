@@ -1,0 +1,36 @@
+﻿@page
+@model MyHouse.Pages.FaqModel
+@{
+    ViewData["Title"] = "FAQ Dinâmico";
+}
+
+<h1>Perguntas Frequentes</h1>
+
+<form method="post" asp-page-handler="Pergunta">
+    <input asp-for="NovaPergunta" placeholder="Digite sua pergunta" required />
+    <button type="submit">Enviar</button>
+</form>
+
+<hr />
+
+@foreach (var pergunta in Model.Perguntas)
+{
+    <div>
+        <strong>@pergunta.Texto</strong> — <em>@pergunta.Usuario.Nome</em>
+        <p><small>@pergunta.Hora</small></p>
+
+        @if (pergunta.Resposta is not null)
+        {
+            <p><strong>Resposta:</strong> @pergunta.Resposta.Texto <em>(por @pergunta.Resposta.Usuario.Nome)</em></p>
+        }
+        else
+        {
+            <form method="post" asp-page-handler="Resposta">
+                <input type="hidden" asp-for="PerguntaId" value="@pergunta.Id" />
+                <input asp-for="NovaResposta" placeholder="Sua resposta..." required />
+                <button type="submit">Responder</button>
+            </form>
+        }
+    </div>
+    <hr />
+}
