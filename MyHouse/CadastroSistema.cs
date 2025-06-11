@@ -4,6 +4,8 @@ public static class CadastroSistema {
     private static readonly string ArquivoUsuarios = "usuarios.json";
     public static JsonDict<string, Usuario> Usuarios { get; private set; }
 
+    public static Usuario? Usuario{ get; private set; }
+
     static CadastroSistema() {
         Usuarios = new(ArquivoUsuarios);
     }
