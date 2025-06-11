@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -14,6 +15,9 @@ public class LoginModel : PageModel{
         Mensagens.Clear();
 
         if (CadastroSistema.AutenticaUsuario(Email, Senha)) {
+
+            // Grava na sessão
+            HttpContext.Session.SetString("UsuarioEmail", Email);
             return RedirectToPage("/PainelUsuario");
         }
         else {

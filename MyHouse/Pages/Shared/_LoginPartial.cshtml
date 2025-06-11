@@ -1,26 +1,27 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+﻿@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var emailUsuario = HttpContextAccessor.HttpContext?.Session.GetString("UsuarioEmail");
+    bool estaLogado = !string.IsNullOrEmpty(emailUsuario);
+}
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Oi @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-page="/Cadastro">Cadastro</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
-    </li>
-}
+
+    @if (estaLogado)
+    {
+        <li class="nav-item">
+            <form method="get" action="/Logout">
+                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Cadastro">Cadastro</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Login">Login</a>
+        </li>
+    }
 </ul>

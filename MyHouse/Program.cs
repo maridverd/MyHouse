@@ -13,6 +13,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
+builder.Services.AddSession(); // Habilita o uso de sessões
+builder.Services.AddHttpContextAccessor(); // Permite acessar HttpContext manualmente, se necessário
 
 var app = builder.Build();
 
@@ -32,6 +34,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession(); // ATIVA o middleware de sessão
 
 app.UseAuthorization();
 
