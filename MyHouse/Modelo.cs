@@ -15,7 +15,7 @@ public class Modelo {
     public bool Avaiable { get; set; } // Se o modelo está disponível para venda
 
     // Construtor
-    public Modelo(string? id, int sales, decimal price, bool avaiable) {
+    Modelo(string? id, int sales, decimal price, bool avaiable) {
         Id = id;
         Sales = sales;
         Price = price;
