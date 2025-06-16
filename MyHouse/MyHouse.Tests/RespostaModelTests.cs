@@ -13,24 +13,24 @@ namespace MyHouse.Tests.Services
         {
             // Arrange
             var mockPerguntas = new MockJsonDict<long, Pergunta>();
-            var pergunta = new Pergunta("Qual o horário de funcionamento?", DateTime.Now, new Usuario("user@example.com", "User"));
+            var pergunta = new Pergunta("Qual o horï¿½rio de funcionamento?", DateTime.Now, new Usuario("user@example.com", new Senha("SenhaMuitoSegura"), new Nome("John", "Teste"), "65204204091", "TestelÃ¢ndia"));
 
             mockPerguntas.Data[pergunta.Id] = pergunta;
 
             var service = new RespostaServiceFake(mockPerguntas);
 
             // Act
-            bool resultado = service.ResponderPergunta(pergunta.Id, "Das 8h às 18h.", "suporte@example.com");
+            bool resultado = service.ResponderPergunta(pergunta.Id, "Das 8h ï¿½s 18h.", "suporte@example.com");
 
             // Assert
             Assert.True(resultado);
             Assert.NotNull(pergunta.Resposta);
-            Assert.Equal("Das 8h às 18h.", pergunta.Resposta!.Texto);
+            Assert.Equal("Das 8h ï¿½s 18h.", pergunta.Resposta!.Texto);
             Assert.Equal("suporte@example.com", pergunta.Resposta.SuporteEmail);
         }
     }
 
-    // Implementação Fake só pra usar o MockJsonDict
+    // Implementaï¿½ï¿½o Fake sï¿½ pra usar o MockJsonDict
     public class RespostaServiceFake : IRespostaService
     {
         private readonly MockJsonDict<long, Pergunta> _mockPerguntas;
