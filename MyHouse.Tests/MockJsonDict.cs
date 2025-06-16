@@ -8,7 +8,7 @@ namespace MyHouse.Tests.Mocks
 
         public void Save()
         {
-            // Não faz nada, só para simular o método real
+            // NÃ£o faz nada, sÃ³ para simular o mÃ©todo real
         }
     }
 }

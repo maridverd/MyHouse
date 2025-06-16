@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyHouse.csproj" />
+    <ProjectReference Include="..\MyHouse\MyHouse.csproj" />
   </ItemGroup>
 
 </Project>
