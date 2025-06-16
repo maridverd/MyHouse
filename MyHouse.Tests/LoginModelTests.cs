@@ -1,6 +1,7 @@
 using Xunit;
 using Moq;
 //teste
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,32 +9,34 @@ using MyHouse.Pages;
 using MyHouse.Services;
 using System.Collections.Generic;
 
-public class LoginModelTests
-{
-    private DefaultHttpContext CriarHttpContextComSession()
-    {
+public class LoginModelTests{
+    private DefaultHttpContext CriarHttpContextComSession(){
         var context = new DefaultHttpContext();
 
-        // Mock simples de ISession
         var sessionMock = new Mock<ISession>();
         var store = new Dictionary<string, byte[]>();
 
-        sessionMock.Setup(s => s.SetString(It.IsAny<string>(), It.IsAny<string>()))
-            .Callback<string, string>((key, value) =>
-            {
-                store[key] = System.Text.Encoding.UTF8.GetBytes(value);
+        sessionMock.Setup(s => s.Set(It.IsAny<string>(), It.IsAny<byte[]>()))
+            .Callback<string, byte[]>((key, value) => store[key] = value);
+
+        sessionMock.Setup(s => s.TryGetValue(It.IsAny<string>(), out It.Ref<byte[]>.IsAny))
+            .Returns((string key, out byte[] value) => {
+                var found = store.TryGetValue(key, out var val);
+                value = val;
+                return found;
             });
 
-        sessionMock.Setup(s => s.GetString(It.IsAny<string>()))
-            .Returns<string>(key =>
-            {
-                return store.ContainsKey(key) ? System.Text.Encoding.UTF8.GetString(store[key]) : null;
-            });
+        sessionMock.Setup(s => s.IsAvailable).Returns(true);
 
+        // Importante: associar o ISession corretamente ao HttpContext
+        context.Features.Set<ISessionFeature>(new SessionFeature { Session = sessionMock.Object });
         context.Session = sessionMock.Object;
+
         return context;
     }
-
+    private class SessionFeature : ISessionFeature{
+    public ISession Session { get; set; }
+    }
     [Fact]
     public void OnPost_LoginBemSucedido_DeveRedirecionarParaPainel()
     {
