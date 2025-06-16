@@ -365,3 +365,4 @@ MyHouse/MyHouse.sln
 .gitignore
 MyHouse/log.txt
 MyHouse/usuarios.json
+MyHouse/perguntas.json
