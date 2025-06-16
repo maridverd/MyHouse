@@ -14,10 +14,10 @@ public class LoginModel : PageModel{
     public IActionResult OnPost(){
         Mensagens.Clear();
 
-        if (Cadastro.AutenticaUsuario(Email, Senha, HttpContext)) {
+        if (Cadastro.AutenticaUsuario(Email!, Senha!, HttpContext)) {
 
             // Grava na sess�o
-            HttpContext.Session.SetString("UsuarioEmail", Email);
+            HttpContext.Session.SetString("UsuarioEmail", Email!);
             return RedirectToPage("/PainelUsuario");
         }
         else {
