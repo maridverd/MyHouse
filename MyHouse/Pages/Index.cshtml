@@ -125,12 +125,19 @@
                 <i class="fas fa-home" style="margin-right: 8px;"></i> Casas
             </button>
             <div id="casas" style="display:none;">
-                <a href="#" onclick="mostrarImagem('casad150.jpeg')">D150</a>
-                <a href="#" onclick="mostrarImagem('casad170.jpeg')">D170</a>
-                <a href="#" onclick="mostrarImagem('casad190.jpg')">D190</a>
-                <a href="#" onclick="mostrarImagem('casad270.jpg')">D270</a>
-                <a href="#" onclick="mostrarImagem('casad290.jpg')">D290</a>
+                @if (Model.ListaDeCasas != null && Model.ListaDeCasas.Any())
+                {
+                    foreach (var casa in Model.ListaDeCasas)
+                    {
+                        <a href="#" onclick="mostrarImagem('@casa.Img', '@casa.Id')">@casa.Id</a>
+                    }
+                }
+                else
+                {
+                    <p>Nenhuma casa disponível no momento.</p>
+                }
             </div>
+
 
             <button onclick="toggleMenu('outros')">
                 <i class="fas fa-bars" style="margin-right: 8px;"></i> Outros
@@ -171,7 +178,7 @@
             el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
         }
 
-        function mostrarImagem(nomeImagem) {
+        function mostrarImagem(nomeImagem, idCasa) {
             const imagem = document.getElementById('imagemCasa');
             const container = document.getElementById('imagemContainer');
             const btnPersonalizar = document.getElementById('btnPersonalizar');
@@ -179,9 +186,10 @@
             if (imagem && container && btnPersonalizar) {
                 imagem.src = `/images/casas/${nomeImagem}`;
                 container.style.display = 'block';
-                btnPersonalizar.href = `/Personalizar?imagemCasa=/images/casas/${nomeImagem}`;
+                btnPersonalizar.href = `/Personalizar?id=${idCasa}`;
             }
         }
+
     </script>
 
 </body>

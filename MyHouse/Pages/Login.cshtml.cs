@@ -25,7 +25,7 @@ namespace MyHouse.Pages
         {
             Mensagens.Clear();
 
-            if (_loginService.AutenticaUsuario(Email, Senha, HttpContext)) // ✅ aqui
+            if (_loginService.AutenticaUsuario(Email!, Senha!, HttpContext)) // ✅ aqui
             {
                 HttpContext.Session.SetString("UsuarioEmail", Email!);
                 return RedirectToPage("/PainelUsuario");

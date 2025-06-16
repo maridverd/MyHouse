@@ -34,7 +34,7 @@ public class Modelo
     {
         try
         {
-            string jsonPath = $"Values/{id}.json";
+            string jsonPath = $"Houses/Values/{id}.json";
             string jsonString = File.ReadAllText(jsonPath);
             Modelo? aux = JsonSerializer.Deserialize<Modelo>(jsonString);
 
