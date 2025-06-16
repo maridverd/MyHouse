@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Personalizar Casa";
     var imagemCasa = "/images/casas/casa"+Request.Query["id"].ToString().ToLower()+".jpeg";
+    var id = Request.Query["id"].ToString().ToLower();
 }
 
 <!DOCTYPE html>
@@ -107,33 +108,34 @@
         </div>
 
         <div class="menu">
-            <button type="button" onclick="toggleMenu('automacao')">Automação e Segurança <i class="fas fa-chevron-down"></i></button>
+            <button type="button" onclick="toggleMenu('automacao')">Automacao e Seguranca <i class="fas fa-chevron-down"></i></button>
             <div id="automacao" class="submenu" style="display:none;">
-                <label><input type="checkbox" name="personalizacao" value="Alarme" /> Alarme</label>
-                <label><input type="checkbox" name="personalizacao" value="Câmeras" /> Câmeras</label>
-                <label><input type="checkbox" name="personalizacao" value="Fechadura Digital" /> Fechadura Digital</label>
+                <label><input type="checkbox" name="personalizacao[Automacao e Seguranca][Alarme]" form="formSalvar" /> Alarme</label>
+                <label><input type="checkbox" name="personalizacao[Automacao e Seguranca][Cameras]" form="formSalvar" /> Cameras</label>
+                <label><input type="checkbox" name="personalizacao[Automacao e Seguranca][Fechadura Digital]" form="formSalvar" /> Fechadura Digital</label>
             </div>
 
-            <button type="button" onclick="toggleMenu('sanitario')">Sanitário <i class="fas fa-chevron-down"></i></button>
+            <button type="button" onclick="toggleMenu('sanitario')">Sanitario <i class="fas fa-chevron-down"></i></button>
             <div id="sanitario" class="submenu" style="display:none;">
-                <label><input type="checkbox" name="personalizacao" value="Ducha Higiênica" /> Ducha Higiênica</label>
-                <label><input type="checkbox" name="personalizacao" value="Vaso Inteligente" /> Vaso Inteligente</label>
-                <label><input type="checkbox" name="personalizacao" value="Lavatório Duplo" /> Lavatório Duplo</label>
+                <label><input type="checkbox" name="personalizacao[Sanitario][Ducha Higienica]" form="formSalvar" /> Ducha Higienica</label>
+                <label><input type="checkbox" name="personalizacao[Sanitario][Vaso Inteligente]" form="formSalvar" /> Vaso Inteligente</label>
             </div>
 
-            <button type="button" onclick="toggleMenu('climatizacao')">Climatização <i class="fas fa-chevron-down"></i></button>
+            <button type="button" onclick="toggleMenu('climatizacao')">Climatizacao <i class="fas fa-chevron-down"></i></button>
             <div id="climatizacao" class="submenu" style="display:none;">
-                <label><input type="checkbox" name="personalizacao" value="Ar-condicionado Split" /> Ar-condicionado Split</label>
-                <label><input type="checkbox" name="personalizacao" value="Ventilação Natural" /> Ventilação Natural</label>
+                <label><input type="checkbox" name="personalizacao[Climatizacao][Ar-condicionado Split]" form="formSalvar" /> Ar-condicionado Split</label>
+                <label><input type="checkbox" name="personalizacao[Climatizacao][Ventilacao Natural]" form="formSalvar" /> Ventilacao Natural</label>
             </div>
 
             <button type="button" onclick="toggleMenu('acabamentos')">Acabamentos <i class="fas fa-chevron-down"></i></button>
             <div id="acabamentos" class="submenu" style="display:none;">
-                <label><input type="checkbox" name="personalizacao" value="Piso Vinílico" /> Piso Vinílico</label>
-                <label><input type="checkbox" name="personalizacao" value="Revestimento 3D" /> Revestimento 3D</label>
-                <label><input type="checkbox" name="personalizacao" value="Teto Rebaixado" /> Teto Rebaixado</label>
+                <label><input type="checkbox" name="personalizacao[Acabamentos][Piso Vinilico]" form="formSalvar" /> Piso Vinilico</label>
+                <label><input type="checkbox" name="personalizacao[Acabamentos][Revestimento 3D]" form="formSalvar" /> Revestimento 3D</label>
+                <label><input type="checkbox" name="personalizacao[Acabamentos][Teto Rebaixado]" form="formSalvar" /> Teto Rebaixado</label>
             </div>
         </div>
+
+
     </div>
 
     <div class="content">
@@ -150,7 +152,7 @@
             <p>Nenhuma imagem selecionada.</p>
         }
 
-        <form method="post">
+        <form id="formSalvar" method="post">
             <input type="hidden" name="imagemCasa" value="@imagemCasa" />
 
             <!-- Aqui ficam os checkboxes de personalização no form -->

@@ -61,7 +61,7 @@ public class Modelo
         try
         {
             // Caminho do arquivo
-            string jsonPath = $"Values/{Id}.json";
+            string jsonPath = $"Houses/Instances/{Id}.json";
 
             // Serializa o objeto atual
             var options = new JsonSerializerOptions { WriteIndented = true };

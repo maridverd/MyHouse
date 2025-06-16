@@ -1,0 +1,32 @@
+{
+  "Id": "d270",
+  "Sales": 75,
+  "Price": 1,
+  "Avaiable": true,
+  "Personalization": 
+  {
+    "Automacao e Seguranca": 
+    {
+      "Alarme": false,
+      "Cameras": false,
+      "Fechadura Digital": false
+    },
+    "Sanitario": 
+    {
+      "Ducha Higienica": false,
+      "Vaso Inteligente": false
+    },
+    "Climatizacao": 
+    {
+      "Ar-condicionado Split": false,
+      "Ventilacao Natural": false
+    },
+    "Acabamentos": 
+    {
+      "Piso Vinilico": false,
+      "Revestimento 3D": false,
+      "Teto Rebaixado": false
+    }
+}
+
+}
