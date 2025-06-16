@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyHouse.Data;
+using MyHouse.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,12 +10,14 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+//gravei na build a interface 
+builder.Services.AddScoped<ILoginService, LoginService>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
-builder.Services.AddSession(); // Habilita o uso de sessões
-builder.Services.AddHttpContextAccessor(); // Permite acessar HttpContext manualmente, se necessário
+builder.Services.AddSession(); // Habilita o uso de sessï¿½es
+builder.Services.AddHttpContextAccessor(); // Permite acessar HttpContext manualmente, se necessï¿½rio
 
 var app = builder.Build();
 
@@ -35,7 +38,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession(); // ATIVA o middleware de sessão
+app.UseSession(); // ATIVA o middleware de sessï¿½o
 
 app.UseAuthorization();
 
