@@ -10,7 +10,7 @@ public class PainelUsuarioModel : PageModel
         var email = HttpContext.Session.GetString("UsuarioEmail");
         if (!string.IsNullOrEmpty(email))
         {
-            NomeUsuario = CadastroSistema.Usuarios.Data[email].Nome.Completo; // Exemplo, adapte conforme sua classe Nome
+            NomeUsuario = Cadastro.Usuarios.Data[email].Nome.Completo; // Exemplo, adapte conforme sua classe Nome
         }
     }
 }

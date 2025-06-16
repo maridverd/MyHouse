@@ -1,10 +1,10 @@
 namespace MyHouse;
 
-public static class CadastroSistema {
+public static class Cadastro {
     private static readonly string ArquivoUsuarios = "usuarios.json";
     public static JsonDict<string, Usuario> Usuarios { get; private set; }
 
-    static CadastroSistema() {
+    static Cadastro() {
         Usuarios = new(ArquivoUsuarios);
     }
 

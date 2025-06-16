@@ -9,7 +9,7 @@ public class Resposta {
     public readonly DateTime Hora;
     [JsonInclude]
     public string SuporteEmail { get; private set; }
-    public Usuario? Suporte => SuporteEmail != null ? CadastroSistema.Usuarios.Data[SuporteEmail] : null;
+    public Usuario? Suporte => SuporteEmail != null ? Cadastro.Usuarios.Data[SuporteEmail] : null;
     public Resposta(string texto, DateTime hora, string suporteEmail) {
         Texto = texto;
         Hora = hora;

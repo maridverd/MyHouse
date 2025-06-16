@@ -26,7 +26,7 @@ public class Pergunta {
         Id = cont++;
         Texto = texto;
         Hora = hora;
-        Usuario = CadastroSistema.Usuarios.Data[usuarioEmail];
+        Usuario = Cadastro.Usuarios.Data[usuarioEmail];
         Resposta = resposta;
     }
 

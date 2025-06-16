@@ -25,7 +25,7 @@ public class PergunteAquiModel : PageModel {
         Perguntas = new("perguntas.json");
         string? email = HttpContext.Session.GetString("UsuarioEmail");
         if (email == null) return RedirectToPage("/Login");
-        Pergunta pergunta = new Pergunta(NovaPergunta!, DateTime.Now, CadastroSistema.Usuarios.Data[email]);
+        Pergunta pergunta = new Pergunta(NovaPergunta!, DateTime.Now, Cadastro.Usuarios.Data[email]);
         Log.Instance.WriteLine($"Perguntas: {Perguntas == null}, NovaPergunta: {NovaPergunta}, Agora: {DateTime.Now}, email: {email}");
         Perguntas!.Data.Add(pergunta.Id, pergunta);
         Perguntas.Save();

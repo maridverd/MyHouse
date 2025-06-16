@@ -25,7 +25,7 @@ public class CadastroModel : PageModel {
             return Page();
         }
 
-        var resultado = CadastroSistema.CadastrarUsuario(
+        var resultado = Cadastro.CadastrarUsuario(
             Email!,
             Senha!,
             new Nome(PrimeiroNome!, UltimoNome!),
@@ -37,7 +37,7 @@ public class CadastroModel : PageModel {
 
         if (resultado.Any(r => r.Codigo == 0))
         {
-            CadastroSistema.AutenticaUsuario(Email!, Senha!, HttpContext);
+            Cadastro.AutenticaUsuario(Email!, Senha!, HttpContext);
             return RedirectToPage("/PainelUsuario");
         }
 

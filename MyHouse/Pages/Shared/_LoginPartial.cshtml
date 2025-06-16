@@ -3,7 +3,7 @@
 @{
     string? emailUsuario = HttpContextAccessor.HttpContext?.Session.GetString("UsuarioEmail");
     bool estaLogado = !string.IsNullOrEmpty(emailUsuario);
-    Usuario? usuario = estaLogado ? CadastroSistema.Usuarios.Data[emailUsuario!] : null;
+    Usuario? usuario = estaLogado ? Cadastro.Usuarios.Data[emailUsuario!] : null;
 }
 
 <ul class="navbar-nav">
