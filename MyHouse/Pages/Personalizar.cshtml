@@ -2,7 +2,7 @@
 @model PersonalizarModel
 @{
     ViewData["Title"] = "Personalizar Casa";
-    var imagemCasa = Request.Query["imagemCasa"].ToString();
+    var imagemCasa = "/images/casas/casa"+Request.Query["id"].ToString().ToLower()+".jpeg";
 }
 
 <!DOCTYPE html>
