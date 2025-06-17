@@ -7,6 +7,7 @@ public readonly struct Nome {
     public readonly string PrimeiroNome;
     [JsonInclude]
     public readonly string UltimoNome;
+    [JsonIgnore]
     public string Completo => PrimeiroNome + ' ' + UltimoNome;
     [JsonConstructor]
     public Nome(string primeiroNome, string ultimoNome) {

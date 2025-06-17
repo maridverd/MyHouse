@@ -11,11 +11,7 @@ using System.Collections.Generic;
 
 //esse arquito ta quebrado
 // Mock simples para o JsonDict<T>
-public class JsonDictMock<TKey, TValue> : IJsonDictServices<TKey, TValue> where TKey : notnull {
-    public Dictionary<TKey, TValue> Data { get; set; } = new Dictionary<TKey, TValue>();
-    public void CarregarDados(){}
-    public void Save() { /* não faz nada no teste */ }
-}
+
 
 public class PergunteAquiModelTests
 {
@@ -84,9 +80,11 @@ public class PergunteAquiModelTests
 
         // Substituir JsonDict por mock para controlar os dados
         // Como Perguntas é public e não interface, usaremos reflection para injetar
-        IJsonDictServices<string, Pergunta> perguntasMock = new JsonDictMock<string, Pergunta>();
+        IJsonDictServices<long, Pergunta> perguntasMock = new JsonDictMock<long, Pergunta>();
 
         model.Perguntas = perguntasMock;
+        if (!Cadastro.Usuarios.Data.ContainsKey("teste@teste.com"))
+            Cadastro.Usuarios.Data.Add("teste@teste.com", new Usuario("teste@teste.com", new Senha("SenhaMuitoSegura"), new Nome("John", "Teste"), "65204204091", "Testelândia"));
 
         // Act
         var result = model.OnPostPergunta();

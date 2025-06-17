@@ -2,7 +2,6 @@ using System;
 using Xunit;
 using MyHouse;
 using MyHouse.Services;
-using MyHouse.Tests.Mocks;
 
 namespace MyHouse.Tests.Services
 {
@@ -12,7 +11,7 @@ namespace MyHouse.Tests.Services
         public void ResponderPergunta_DeveAdicionarRespostaCorretamente()
         {
             // Arrange
-            var mockPerguntas = new MockJsonDict<long, Pergunta>();
+            var mockPerguntas = new JsonDictMock<long, Pergunta>();
             var pergunta = new Pergunta("Qual o horário de funcionamento?", DateTime.Now, new Usuario("user@example.com", new Senha("SenhaMuitoSegura"), new Nome("John", "Teste"), "65204204091", "Testelândia"));
 
             mockPerguntas.Data[pergunta.Id] = pergunta;
@@ -33,9 +32,9 @@ namespace MyHouse.Tests.Services
     // Implementação Fake só pra usar o MockJsonDict
     public class RespostaServiceFake : IRespostaService
     {
-        private readonly MockJsonDict<long, Pergunta> _mockPerguntas;
+        private readonly JsonDictMock<long, Pergunta> _mockPerguntas;
 
-        public RespostaServiceFake(MockJsonDict<long, Pergunta> mockPerguntas)
+        public RespostaServiceFake(JsonDictMock<long, Pergunta> mockPerguntas)
         {
             _mockPerguntas = mockPerguntas;
         }

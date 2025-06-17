@@ -13,22 +13,21 @@ public class PergunteAquiModel : PageModel {
     [BindProperty]
     public string? NovaResposta { get; set; }
 
-    public IJsonDictServices<long, Pergunta>? Perguntas;
-    public IJsonDictServices<long, Resposta>? Respostas;
+    public IJsonDictServices<long, Pergunta>? Perguntas = new JsonDict<long, Pergunta>("perguntas.json");
+    public IJsonDictServices<long, Resposta>? Respostas = new JsonDict<long, Resposta>("respostas.json");
 
     public void OnGet() {
-        Perguntas = new JsonDict<long, Pergunta>("perguntas.json");
-        Respostas = new JsonDict<long, Resposta>("respostas.json");
     }
 
     public IActionResult OnPostPergunta() {
-        Perguntas = new JsonDict<long, Pergunta>("perguntas.json");
         string? email = HttpContext.Session.GetString("UsuarioEmail");
         if (email == null) return RedirectToPage("/Login");
-        Pergunta pergunta = new Pergunta(NovaPergunta!, DateTime.Now, Cadastro.Usuarios.Data[email]);
+        Pergunta pergunta = new Pergunta(NovaPergunta!, DateTime.Now, email);
         Log.Instance.WriteLine($"Perguntas: {Perguntas == null}, NovaPergunta: {NovaPergunta}, Agora: {DateTime.Now}, email: {email}");
-        Perguntas!.Data.Add(pergunta.Id, pergunta);
-        Perguntas.Save();
+        if (!Perguntas.Data.ContainsKey(pergunta.Id)) {
+            Perguntas!.Data.Add(pergunta.Id, pergunta);
+            Perguntas.Save();
+        }
         return RedirectToPage();
     }
 
