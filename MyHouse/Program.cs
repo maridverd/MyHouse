@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MyHouse;
 using MyHouse.Data;
 using MyHouse.Services;
 
@@ -12,6 +13,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 //gravei na build a interface 
 builder.Services.AddScoped<ILoginService, LoginService>();
+
+// Injeção do JsonDict de Perguntas
+builder.Services.AddScoped<JsonDict<long, Pergunta>>(sp => new JsonDict<long, Pergunta>("perguntas.json"));
+
+// Injeção do RespostaService
+builder.Services.AddScoped<IRespostaService, RespostaService>();
+
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
