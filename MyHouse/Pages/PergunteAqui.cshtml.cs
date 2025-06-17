@@ -13,16 +13,16 @@ public class PergunteAquiModel : PageModel {
     [BindProperty]
     public string? NovaResposta { get; set; }
 
-    public JsonDict<long, Pergunta>? Perguntas;
-    public JsonDict<long, Resposta>? Respostas;
+    public IJsonDictServices<long, Pergunta>? Perguntas;
+    public IJsonDictServices<long, Resposta>? Respostas;
 
     public void OnGet() {
-        Perguntas = new("perguntas.json");
-        Respostas = new("respostas.json");
+        Perguntas = new JsonDict<long, Pergunta>("perguntas.json");
+        Respostas = new JsonDict<long, Resposta>("respostas.json");
     }
 
     public IActionResult OnPostPergunta() {
-        Perguntas = new("perguntas.json");
+        Perguntas = new JsonDict<long, Pergunta>("perguntas.json");
         string? email = HttpContext.Session.GetString("UsuarioEmail");
         if (email == null) return RedirectToPage("/Login");
         Pergunta pergunta = new Pergunta(NovaPergunta!, DateTime.Now, Cadastro.Usuarios.Data[email]);

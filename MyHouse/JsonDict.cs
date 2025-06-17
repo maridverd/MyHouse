@@ -2,9 +2,9 @@ using System.Text.Json;
 
 namespace MyHouse;
 
-public class JsonDict<TKey, TValue> where TKey : notnull{
+public class JsonDict<TKey, TValue> : IJsonDictServices<TKey, TValue> where TKey : notnull{
     public readonly string CaminhoArquivo;
-    public Dictionary<TKey, TValue> Data;
+    public Dictionary<TKey, TValue> Data{ get; set; }
     public JsonDict(string caminhoArquivo) {
         CaminhoArquivo = caminhoArquivo;
         CarregarDados();
@@ -14,7 +14,7 @@ public class JsonDict<TKey, TValue> where TKey : notnull{
         File.WriteAllText(CaminhoArquivo, JsonSerializer.Serialize(Data));
     }
     // Carrega os dados existentes do arquivo JSON
-    private void CarregarDados() {
+    public void CarregarDados() {
         if (!File.Exists(CaminhoArquivo)) {
             Log.Instance.WriteLine($"Sem arquivo {CaminhoArquivo}");
             File.WriteAllText(CaminhoArquivo, "{}");

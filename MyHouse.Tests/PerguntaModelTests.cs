@@ -11,15 +11,16 @@ using System.Collections.Generic;
 
 //esse arquito ta quebrado
 // Mock simples para o JsonDict<T>
-public class JsonDictMock<T> where T : class
-{
-    public Dictionary<long, T> Data { get; set; } = new Dictionary<long, T>();
+public class JsonDictMock<TKey, TValue> : IJsonDictServices<TKey, TValue> where TKey : notnull {
+    public Dictionary<TKey, TValue> Data { get; set; } = new Dictionary<TKey, TValue>();
+    public void CarregarDados(){}
     public void Save() { /* não faz nada no teste */ }
 }
 
 public class PergunteAquiModelTests
 {
-    private DefaultHttpContext CriarHttpContextComSession(string? usuarioEmail)
+    // private DefaultHttpContext CriarHttpContextComSession(string? usuarioEmail)
+    private DefaultHttpContext CriarHttpContextComSession(string usuarioEmail)
     {
         var context = new DefaultHttpContext();
 
@@ -83,11 +84,9 @@ public class PergunteAquiModelTests
 
         // Substituir JsonDict por mock para controlar os dados
         // Como Perguntas é public e não interface, usaremos reflection para injetar
-        var perguntasMock = new JsonDictMock<Pergunta>();
+        IJsonDictServices<string, Pergunta> perguntasMock = new JsonDictMock<string, Pergunta>();
 
-        // Usando reflection para substituir o campo Perguntas do model
-        var perguntasField = typeof(PergunteAquiModel).GetField("Perguntas", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
-        perguntasField.SetValue(model, perguntasMock);
+        model.Perguntas = perguntasMock;
 
         // Act
         var result = model.OnPostPergunta();
