@@ -84,7 +84,7 @@ public class PergunteAquiModelTests
 
         // Substituir JsonDict por mock para controlar os dados
         // Como Perguntas é public e não interface, usaremos reflection para injetar
-        IJsonDictServices<string, Pergunta> perguntasMock = new JsonDictMock<string, Pergunta>();
+        IJsonDictServices<long, Pergunta> perguntasMock = new JsonDictMock<long, Pergunta>();
 
         model.Perguntas = perguntasMock;
 
