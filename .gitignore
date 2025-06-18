@@ -362,7 +362,9 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 MyHouse/MyHouse.sln
-.gitignore
 MyHouse/log.txt
 MyHouse/usuarios.json
 MyHouse/perguntas.json
+MyHouse.Tests/MyHouse.Tests.sln
+
+.gitignore
