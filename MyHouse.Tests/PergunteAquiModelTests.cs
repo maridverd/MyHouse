@@ -9,15 +9,8 @@ using MyHouse;
 using System;
 using System.Collections.Generic;
 
-//esse arquito ta quebrado
-// Mock simples para o JsonDict<T>
-
-
-public class PergunteAquiModelTests
-{
-    // private DefaultHttpContext CriarHttpContextComSession(string? usuarioEmail)
-    private DefaultHttpContext CriarHttpContextComSession(string usuarioEmail)
-    {
+public class PergunteAquiModelTests {
+    private DefaultHttpContext CriarHttpContextComSession(string usuarioEmail) {
         var context = new DefaultHttpContext();
 
         var sessionMock = new Mock<ISession>();
@@ -27,22 +20,19 @@ public class PergunteAquiModelTests
             .Callback<string, byte[]>((key, value) => store[key] = value);
 
         sessionMock.Setup(s => s.TryGetValue(It.IsAny<string>(), out It.Ref<byte[]>.IsAny))
-            .Returns((string key, out byte[] value) =>
-            {
+            .Returns((string key, out byte[] value) => {
                 var found = store.TryGetValue(key, out var val);
                 value = val;
                 return found;
             });
 
-        if (usuarioEmail != null)
-        {
+        if (usuarioEmail != null) {
             var bytes = System.Text.Encoding.UTF8.GetBytes(usuarioEmail);
             store["UsuarioEmail"] = bytes;
         }
 
         sessionMock.Setup(s => s.TryGetValue(It.IsAny<string>(), out It.Ref<byte[]>.IsAny))
-            .Returns((string key, out byte[] value) =>
-            {
+            .Returns((string key, out byte[] value) => {
                 var found = store.TryGetValue(key, out var val);
                 value = val;
                 return found;
@@ -57,71 +47,53 @@ public class PergunteAquiModelTests
         return context;
     }
 
-    private class SessionFeature : ISessionFeature
-    {
+    private class SessionFeature : ISessionFeature {
         public ISession Session { get; set; }
     }
 
     [Fact]
-    public void OnPostPergunta_ComUsuarioLogado_DeveAdicionarPerguntaERedirecionar()
-    {
-        // Arrange
+    public void OnPostPergunta_ComUsuarioLogado_DeveAdicionarPerguntaERedirecionar() {
         string email = "teste@teste.com";
         var httpContext = CriarHttpContextComSession(email);
 
-        var model = new PergunteAquiModel
-        {
+        var model = new PergunteAquiModel {
             NovaPergunta = "Qual o horário de atendimento?",
-            PageContext = new PageContext
-            {
+            PageContext = new PageContext {
                 HttpContext = httpContext
             }
         };
 
-        // Substituir JsonDict por mock para controlar os dados
-        // Como Perguntas é public e não interface, usaremos reflection para injetar
         IJsonDictServices<long, Pergunta> perguntasMock = new JsonDictMock<long, Pergunta>();
 
         model.Perguntas = perguntasMock;
         if (!Cadastro.Usuarios.Data.ContainsKey("teste@teste.com"))
             Cadastro.Usuarios.Data.Add("teste@teste.com", new Usuario("teste@teste.com", new Senha("SenhaMuitoSegura"), new Nome("John", "Teste"), "65204204091", "Testelândia"));
 
-        // Act
         var result = model.OnPostPergunta();
 
-        // Assert
         var redirect = Assert.IsType<RedirectToPageResult>(result);
-        Assert.Null(redirect.PageName); // Redireciona para a mesma página
+        Assert.Null(redirect.PageName);
 
-        // Verificar se a pergunta foi adicionada ao dicionário
         Assert.Single(perguntasMock.Data);
         var perguntaAdicionada = Assert.Single(perguntasMock.Data.Values);
 
         Assert.Equal("Qual o horário de atendimento?", perguntaAdicionada.Texto);
-        Assert.NotEqual(default, perguntaAdicionada.Hora); // Verifica que a data foi setada
-        // Como CriarPergunta depende do email, testar se o usuário está associado, etc, depende da implementação de Pergunta, 
-        // mas pelo menos aqui verificamos a pergunta criada com o texto correto
+        Assert.NotEqual(default, perguntaAdicionada.Hora);
     }
 
     [Fact]
-    public void OnPostPergunta_SemUsuarioLogado_DeveRedirecionarParaLogin()
-    {
-        // Arrange
+    public void OnPostPergunta_SemUsuarioLogado_DeveRedirecionarParaLogin() {
         var httpContext = CriarHttpContextComSession(null);
 
-        var model = new PergunteAquiModel
-        {
+        var model = new PergunteAquiModel {
             NovaPergunta = "Qual o horário de atendimento?",
-            PageContext = new PageContext
-            {
+            PageContext = new PageContext {
                 HttpContext = httpContext
             }
         };
 
-        // Act
         var result = model.OnPostPergunta();
 
-        // Assert
         var redirect = Assert.IsType<RedirectToPageResult>(result);
         Assert.Equal("/Login", redirect.PageName);
     }

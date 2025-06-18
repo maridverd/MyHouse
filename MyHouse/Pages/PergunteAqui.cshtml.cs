@@ -23,7 +23,7 @@ public class PergunteAquiModel : PageModel {
         string? email = HttpContext.Session.GetString("UsuarioEmail");
         if (email == null) return RedirectToPage("/Login");
         Pergunta pergunta = new Pergunta(NovaPergunta!, DateTime.Now, email);
-        if (!Perguntas.Data.ContainsKey(pergunta.Id)) {
+        if (!Perguntas!.Data.ContainsKey(pergunta.Id)) {
             Perguntas!.Data.Add(pergunta.Id, pergunta);
             Perguntas.Save();
         }

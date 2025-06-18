@@ -1,6 +1,5 @@
 using Xunit;
 using Moq;
-//teste
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +20,6 @@ public class ModeloTests {
 
         Modelo modelo2 = Modelo.Create("d170", "Houses_test/Instances/");
 
-        // Assert
         Assert.IsType<Modelo>(modelo);
         Assert.Equal(modelo.Personalization, modelo2.Personalization);
     }

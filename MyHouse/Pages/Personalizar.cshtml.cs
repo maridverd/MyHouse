@@ -27,7 +27,7 @@ public class PersonalizarModel : PageModel
                 // if (!novasPersonalizacoes.ContainsKey(categoria))
                 //     novasPersonalizacoes[categoria] = new Dictionary<string, bool>();
                 Console.WriteLine($"[{categoria}][{opcao}]");
-                model.Personalization[categoria][opcao] = true;
+                model.Personalization![categoria][opcao] = true;
             }
         }
 

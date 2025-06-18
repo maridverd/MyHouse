@@ -1,6 +1,5 @@
 using Xunit;
 using Moq;
-//teste
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,67 +27,54 @@ public class LoginModelTests{
 
         sessionMock.Setup(s => s.IsAvailable).Returns(true);
 
-        // Importante: associar o ISession corretamente ao HttpContext
         context.Features.Set<ISessionFeature>(new SessionFeature { Session = sessionMock.Object });
         context.Session = sessionMock.Object;
 
         return context;
     }
-    private class SessionFeature : ISessionFeature{
+    private class SessionFeature : ISessionFeature {
     public ISession Session { get; set; }
     }
     [Fact]
-    public void OnPost_LoginBemSucedido_DeveRedirecionarParaPainel()
-    {
-        // Arrange
+    public void OnPost_LoginBemSucedido_DeveRedirecionarParaPainel() {
         var mockService = new Mock<ILoginService>();
         var httpContext = CriarHttpContextComSession();
 
         mockService.Setup(s => s.AutenticaUsuario("teste@email.com", "senha123", httpContext))
                    .Returns(true);
 
-        var model = new LoginModel(mockService.Object)
-        {
+        var model = new LoginModel(mockService.Object) {
             Email = "teste@email.com",
             Senha = "senha123",
-            PageContext = new PageContext
-            {
+            PageContext = new PageContext {
                 HttpContext = httpContext
             }
         };
 
-        // Act
         var resultado = model.OnPost();
 
-        // Assert
         var redirect = Assert.IsType<RedirectToPageResult>(resultado);
         Assert.Equal("/PainelUsuario", redirect.PageName);
     }
 
     [Fact]
-    public void OnPost_LoginFalhou_DeveMostrarMensagemErro()
-    {
-        // Arrange
+    public void OnPost_LoginFalhou_DeveMostrarMensagemErro() {
         var mockService = new Mock<ILoginService>();
         var httpContext = CriarHttpContextComSession();
 
         mockService.Setup(s => s.AutenticaUsuario("usuario@teste.com", "errada", httpContext))
                    .Returns(false);
 
-        var model = new LoginModel(mockService.Object)
-        {
+        var model = new LoginModel(mockService.Object) {
             Email = "usuario@teste.com",
             Senha = "errada",
-            PageContext = new PageContext
-            {
+            PageContext = new PageContext {
                 HttpContext = httpContext
             }
         };
 
-        // Act
         var resultado = model.OnPost();
 
-        // Assert
         Assert.IsType<PageResult>(resultado);
         Assert.Single(model.Mensagens);
         Assert.Equal(1, model.Mensagens[0].Codigo);
