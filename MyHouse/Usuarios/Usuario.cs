@@ -1,19 +1,19 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace MyHouse;
 
 public class Usuario {
-    [JsonInclude]
+    [JsonProperty]
     public string Email { get; private set; }
-    [JsonInclude]
+    [JsonProperty]
     public Senha Senha { get; private set; }
-    [JsonInclude]
+    [JsonProperty]
     public Nome Nome { get; private set; }
-    [JsonInclude]
+    [JsonProperty]
     public string CPF { get; private set; }
-    [JsonInclude]
+    [JsonProperty]
     public string Endereco { get; private set; }
-    [JsonInclude]
+    [JsonProperty]
     public bool IsSuporte { get; private set; }
     [JsonConstructor]
     public Usuario(string email, Senha senha, Nome nome, string cpf, string endereco, bool isSuporte = false) {

@@ -1,11 +1,11 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace MyHouse;
 
 public readonly struct Nome {
-    [JsonInclude]
+    [JsonProperty]
     public readonly string PrimeiroNome;
-    [JsonInclude]
+    [JsonProperty]
     public readonly string UltimoNome;
     [JsonIgnore]
     public string Completo => PrimeiroNome + ' ' + UltimoNome;

@@ -1,13 +1,11 @@
-﻿using System.Text.Json;
+﻿using Newtonsoft.Json;
 
-public class Modelo
-{
+public class Modelo{
     public string? Id { get; init; } // identificador do modelo
-    private int? _sales; // Número de vendas desse modelo
-    public int? Sales
-    {
+    private int _sales; // Número de vendas desse modelo
+    public int Sales{
         get => _sales;
-        set
+        private set
         {
             if (value < _sales)
                 throw new ArgumentException("O número de vendas só pode aumentar");
@@ -19,9 +17,8 @@ public class Modelo
 
     public Dictionary<string, Dictionary<string, bool>>? Personalization { get; set; }
     // Construtor
-    public Modelo() { }
-    Modelo(string id, int sales, decimal price, bool avaiable, Dictionary<string, Dictionary<string, bool>>? personalization)
-    {
+    [JsonConstructor]
+    Modelo(string id, int sales, decimal price, bool avaiable, Dictionary<string, Dictionary<string, bool>>? personalization) {
         Id = id;
         Sales = sales;
         Price = price;
@@ -30,48 +27,41 @@ public class Modelo
     }
 
     // Método para instanciar models a partir do json (passa o id que ele retorna o json)
-    public static Modelo Create(string? id)
-    {
-        try
-        {
-            string jsonPath = $"Houses/Values/{id}.json";
+    public static Modelo Create(string? id, string values_path="Houses/Values/") {
+        try {
+            string jsonPath = $"{values_path}{id}.json";
             string jsonString = File.ReadAllText(jsonPath);
-            Modelo? aux = JsonSerializer.Deserialize<Modelo>(jsonString);
+            Modelo? aux = JsonConvert.DeserializeObject<Modelo>(jsonString);
 
             if (aux != null)
                 return aux;
             else
                 throw new Exception($"O arquivo {jsonPath} está vazio");
         }
-        catch (FileNotFoundException ex)
-        {
+        catch (FileNotFoundException ex) {
             Console.WriteLine($"Arquivo não encontrado: {ex}");
-            return new Modelo(String.Empty, 0, 0, false, null);
+            return new Modelo(string.Empty, 0, 0, false, null);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             Console.WriteLine($"Erro inesperado: {ex}");
-            return new Modelo(String.Empty, 0, 0, false, null);
+            return new Modelo(string.Empty, 0, 0, false, null);
         }
     }
 
     // Guarda as novas informações no json, deve ser chamado quando o Model atual não for mais modificado
-    public void Store()
-    {
-        try
-        {
+    public void Store(string instances_path="Houses/Instances/") {
+        try {
             // Caminho do arquivo
-            string jsonPath = $"Houses/Instances/{Id}.json";
+            string jsonPath = $"{instances_path}{Id}.json";
 
             // Serializa o objeto atual
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string jsonString = JsonSerializer.Serialize(this, options);
+            var options = new JsonSerializerSettings { Formatting = Formatting.Indented };
+            string jsonString = JsonConvert.SerializeObject(this, options);
 
             // Escreve no arquivo
             File.WriteAllText(jsonPath, jsonString);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             Console.WriteLine($"Erro ao salvar o modelo: {ex.Message}");
         }
     }

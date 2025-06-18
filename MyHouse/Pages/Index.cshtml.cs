@@ -1,4 +1,4 @@
-using System.Text.Json;
+using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -18,7 +18,7 @@ namespace MyHouse.Pages
         public void OnGet()
         {
             string json = System.IO.File.ReadAllText("Houses/OnDataBase.json");
-            ListaDeCasas = JsonSerializer.Deserialize<List<Casa>>(json);
+            ListaDeCasas = JsonConvert.DeserializeObject<List<Casa>>(json);
         }
     }
 }

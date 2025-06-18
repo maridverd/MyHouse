@@ -1,13 +1,13 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace MyHouse;
 
 public class Resposta {
-    [JsonInclude]
+    [JsonProperty]
     public readonly string Texto;
-    [JsonInclude]
+    [JsonProperty]
     public readonly DateTime Hora;
-    [JsonInclude]
+    [JsonProperty]
     public string SuporteEmail { get; private set; }
     public Usuario? Suporte => SuporteEmail != null ? Cadastro.Usuarios.Data[SuporteEmail] : null;
     public Resposta(string texto, DateTime hora, string suporteEmail) {

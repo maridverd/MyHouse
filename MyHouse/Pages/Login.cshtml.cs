@@ -31,7 +31,6 @@ namespace MyHouse.Pages
                 return RedirectToPage("/PainelUsuario");
             }
 
-            Log.Instance.WriteLine("Erro no Login");
             Mensagens.Add(new CodigoRetorno(1, "Email e/ou senha incorretos"));
 
             return Page();

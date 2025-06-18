@@ -1,13 +1,13 @@
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace MyHouse;
 
 public readonly struct Senha {
-    [JsonInclude]
+    [JsonProperty]
     public readonly string HashSenha;
-    [JsonInclude]
+    [JsonProperty]
     public readonly string Sal;
     public Senha(string senha) {
         Sal = Convert.ToBase64String(RandomNumberGenerator.GetBytes(16));

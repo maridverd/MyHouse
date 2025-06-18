@@ -1,4 +1,4 @@
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace MyHouse;
 
@@ -11,7 +11,7 @@ public class JsonDict<TKey, TValue> : IJsonDictServices<TKey, TValue> where TKey
         Data ??= new();
     }
     public void Save() {
-        File.WriteAllText(CaminhoArquivo, JsonSerializer.Serialize(Data));
+        File.WriteAllText(CaminhoArquivo, JsonConvert.SerializeObject(Data));
     }
     // Carrega os dados existentes do arquivo JSON
     public void CarregarDados() {
@@ -24,7 +24,7 @@ public class JsonDict<TKey, TValue> : IJsonDictServices<TKey, TValue> where TKey
         else {
             string FileContent = File.ReadAllText(CaminhoArquivo);
             try {
-                Data = JsonSerializer.Deserialize<Dictionary<TKey, TValue>>(FileContent) ?? new();
+                Data = JsonConvert.DeserializeObject<Dictionary<TKey, TValue>>(FileContent) ?? new();
             }
             catch (JsonException jsonException) {
                 Log.Instance.WriteLine($"Json Exception: {jsonException}.\nFile: {CaminhoArquivo}\nBacking up and creating empty dictionary instead");

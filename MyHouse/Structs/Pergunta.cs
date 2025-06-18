@@ -1,19 +1,19 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace MyHouse;
 
 public class Pergunta {
     private static int cont = 0;
-    [JsonInclude]
+    [JsonProperty]
     public readonly string Texto;
-    [JsonInclude]
+    [JsonProperty]
     public readonly DateTime Hora;
-    [JsonInclude]
+    [JsonProperty]
     public readonly long Id;
-    [JsonInclude]
+    [JsonProperty]
     public string? UsuarioEmail => Usuario?.Email;
     public Usuario Usuario { get; private set; }
-    [JsonInclude]
+    [JsonProperty]
     public Resposta? Resposta { get; private set; } = null;
     public Pergunta(string texto, DateTime hora, Usuario usuario) {
         Id = cont++;
