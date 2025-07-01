@@ -1,7 +1,7 @@
 ﻿@page
-@model IndexModel
+@model MyHouse.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
     var mensagem = Request.Query["mensagem"].ToString();
 }
 
@@ -9,37 +9,44 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MyHOUSE - @ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MyHOUSE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         html, body {
-            height: 100%;
             margin: 0;
+            padding: 0;
+            height: 100%;
             font-family: Arial, sans-serif;
             background-color: #ccc;
         }
+
         .sidebar {
             position: fixed;
-            left: 0; top: 0;
+            top: 0;
+            left: 0;
             width: 200px;
             height: 100%;
             background-color: rgba(228, 222, 210, 0.9);
             padding-top: 20px;
         }
+
         .logo {
             text-align: center;
             margin-bottom: 30px;
         }
+
         .logo img {
             width: 150px;
         }
+
         .menu {
             display: flex;
             flex-direction: column;
             gap: 10px;
             padding: 0 20px;
         }
+
         .menu button, .menu a {
             background-color: #00a86b;
             color: white;
@@ -50,30 +57,41 @@
             cursor: pointer;
             text-align: left;
             transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
             width: 100%;
             text-decoration: none;
             display: block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         }
+
         .menu button:hover, .menu a:hover {
             background-color: #007e52;
             transform: translateY(-1px);
         }
+
         .submenu {
-            margin-left: 15px;
+            margin-left: 10px;
             margin-top: 5px;
+            display: none;
+            flex-direction: column;
+            gap: 5px;
         }
+
         .content {
             margin-left: 220px;
             padding: 20px;
-            color: #333;
             max-width: 900px;
+            color: #333;
         }
+
         .imagem-container img {
+            width: 100%;
             max-width: 500px;
+            height: auto;
             border-radius: 10px;
             box-shadow: 0 0 8px rgba(0,0,0,0.3);
+            object-fit: cover;
         }
+
         .personalizar-btn {
             display: inline-block;
             margin-top: 10px;
@@ -84,11 +102,11 @@
             text-decoration: none;
             font-size: 16px;
         }
+
         .personalizar-btn:hover {
             background-color: #007e52;
         }
 
-        /* === ALERTA DE SUCESSO === */
         .mensagem-sucesso {
             margin-bottom: 20px;
             padding: 10px 15px;
@@ -121,10 +139,11 @@
         </div>
 
         <div class="menu">
+            <!-- Casas -->
             <button onclick="toggleMenu('casas')">
                 <i class="fas fa-home" style="margin-right: 8px;"></i> Casas
             </button>
-            <div id="casas" style="display:none;">
+            <div id="casas" class="submenu">
                 @if (Model.ListaDeCasas != null && Model.ListaDeCasas.Any())
                 {
                     foreach (var casa in Model.ListaDeCasas)
@@ -134,15 +153,27 @@
                 }
                 else
                 {
-                    <p>Nenhuma casa disponível no momento.</p>
+                    <span style="margin-left:10px;">Nenhuma casa disponível.</span>
                 }
             </div>
 
+            <!-- Cômodos -->
+            <button onclick="toggleMenu('comodos')">
+                <i class="fas fa-door-open" style="margin-right: 8px;"></i> Cômodos
+            </button>
+            <div id="comodos" class="submenu">
+                 <a href="#" onclick="mostrarImagemComodo('sala.jpg', 'sala')">sala</a>
+                <a href="#" onclick="mostrarImagemComodo('banheiro.jpg', 'banheiro')">banheiro</a>
+                <a href="#" onclick="mostrarImagemComodo('lavanderia.jpg', 'lavanderia')">Lavanderia</a>
+                <a href="#" onclick="mostrarImagemComodo('quartoSolteiro.jpg', 'quartoSolteiro')">Quarto de Solteiro</a>
+                <a href="#" onclick="mostrarImagemComodo('quartoCasal.jpg', 'quartoCasal')">Quarto de Casal</a>
+            </div>
 
+            <!-- Outros -->
             <button onclick="toggleMenu('outros')">
                 <i class="fas fa-bars" style="margin-right: 8px;"></i> Outros
             </button>
-            <div id="outros" style="display:none;">
+            <div id="outros" class="submenu">
                 <a href="#">Ofertas</a>
                 <a href="#">Proprietário</a>
                 <a href="#">Conheça a SIConTech</a>
@@ -154,7 +185,6 @@
     <div class="content">
         <h2>Bem-vindo ao MyHOUSE!</h2>
 
-        @* === ALERTA DE SUCESSO COM FECHAMENTO === *@
         @if (!string.IsNullOrEmpty(mensagem))
         {
             <div class="mensagem-sucesso" id="mensagemAlerta">
@@ -166,9 +196,9 @@
         <p>Mais que uma empresa inovadora, um conceito: casas cheias de tecnologia, estilo e personalidade.</p>
 
         <div class="imagem-container" id="imagemContainer" style="display:none;">
-            <img id="imagemCasa" src="" alt="Imagem da Casa Selecionada" />
+            <img id="imagemCasa" src="" alt="Imagem selecionada" />
             <br />
-            <a id="btnPersonalizar" href="#" class="personalizar-btn">Personalizar</a>
+            <a id="btnPersonalizar" href="#" class="personalizar-btn" style="display: none;">Personalizar</a>
         </div>
     </div>
 
@@ -181,15 +211,26 @@
         function mostrarImagem(nomeImagem, idCasa) {
             const imagem = document.getElementById('imagemCasa');
             const container = document.getElementById('imagemContainer');
-            const btnPersonalizar = document.getElementById('btnPersonalizar');
+            const btn = document.getElementById('btnPersonalizar');
 
-            if (imagem && container && btnPersonalizar) {
-                imagem.src = `/images/casas/${nomeImagem}`;
-                container.style.display = 'block';
-                btnPersonalizar.href = `/Personalizar?id=${idCasa}`;
-            }
+            imagem.src = `/images/casas/${nomeImagem}`;
+            container.style.display = 'block';
+            btn.href = `/Personalizar?id=${idCasa}`;
+            btn.textContent = 'Personalizar';
+            btn.style.display = 'inline-block';
         }
 
+        function mostrarImagemComodo(nomeImagem, idComodo) {
+            const imagem = document.getElementById('imagemCasa');
+            const container = document.getElementById('imagemContainer');
+            const btn = document.getElementById('btnPersonalizar');
+
+            imagem.src = `/images/comodos/${nomeImagem}`;
+            container.style.display = 'block';
+            btn.href = `/PersonalizarComodo?id=${idComodo}`;
+            btn.textContent = 'Personalizar cômodo';
+            btn.style.display = 'inline-block';
+        }
     </script>
 
 </body>

@@ -1,0 +1,94 @@
+@page
+@model MyHouse.Pages.PersonalizarComodoModel
+@{
+    ViewData["Title"] = "Personalizar Cômodo";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e7e7e7;
+            padding: 30px;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            color: #00a86b;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .botao-salvar {
+            background-color: #00a86b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        .botao-salvar:hover {
+            background-color: #007e52;
+        }
+
+        .mensagem-sucesso {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 5px;
+        }
+
+        a.voltar {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007e52;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Personalizar o cômodo: @Model.ComodoId</h2>
+
+        <form method="post">
+            <label><input type="checkbox" name="iluminacao" checked /> Iluminação LED</label>
+            <label><input type="checkbox" name="moveis" /> Móveis planejados</label>
+            <label><input type="checkbox" name="piso" /> Piso vinílico</label>
+
+            <button type="submit" class="botao-salvar">Salvar Personalização</button>
+        </form>
+
+        @if (Model.Mensagem != null)
+        {
+            <div class="mensagem-sucesso">@Model.Mensagem</div>
+        }
+
+        <a href="/" class="voltar">← Voltar à página inicial</a>
+    </div>
+</body>
+</html>
