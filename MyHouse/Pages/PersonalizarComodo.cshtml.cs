@@ -19,16 +19,14 @@ namespace MyHouse.Pages
 
         public string? Mensagem { get; set; }
 
-        public void OnGet()
-        {
-            // Pode carregar dados do cômodo no futuro
+        public void OnGet() {
         }
 
         public IActionResult OnPost()
         {
             Mensagem = "Personalização salva com sucesso!";
 
-            // Aqui você poderia salvar em um banco de dados ou arquivo
+            
 
             return Page();
         }

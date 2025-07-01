@@ -22,14 +22,17 @@
         }
 
         .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 200px;
-            height: 100%;
-            background-color: rgba(228, 222, 210, 0.9);
-            padding-top: 20px;
-        }
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 200px;
+        height: 100vh;       
+        background-color: rgba(228, 222, 210, 0.9);
+        padding-top: 20px;
+        overflow-y: auto;   
+        overscroll-behavior: contain;
+}
+
 
         .logo {
             text-align: center;
@@ -157,7 +160,7 @@
                 }
             </div>
 
-            <!-- Cômodos -->
+           
             <button onclick="toggleMenu('comodos')">
                 <i class="fas fa-door-open" style="margin-right: 8px;"></i> Cômodos
             </button>
@@ -169,7 +172,7 @@
                 <a href="#" onclick="mostrarImagemComodo('quartoCasal.jpg', 'quartoCasal')">Quarto de Casal</a>
             </div>
 
-            <!-- Outros -->
+            
             <button onclick="toggleMenu('outros')">
                 <i class="fas fa-bars" style="margin-right: 8px;"></i> Outros
             </button>

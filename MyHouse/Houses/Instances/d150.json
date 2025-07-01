@@ -5,7 +5,7 @@
   "Avaiable": true,
   "Personalization": {
     "Automacao e Seguranca": {
-      "Alarme": false,
+      "Alarme": true,
       "Cameras": false,
       "Fechadura Digital": false
     },

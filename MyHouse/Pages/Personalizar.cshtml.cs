@@ -1,42 +1,74 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
 
 public class PersonalizarModel : PageModel
 {
-    public IActionResult OnPost()
+    public string? Id { get; set; }
+    public Modelo? Dados { get; set; }
+    [BindProperty]
+    public string? Mensagem { get; set; }
+
+    public void OnGet()
+    {
+        Id = Request.Query["id"].ToString().ToLower();
+
+        if (!string.IsNullOrEmpty(Id))
+        {
+            Dados = Modelo.Create(Id);
+        }
+    }
+
+    public void OnPost()
     {
         string? id = Request.Query["id"].ToString().ToLower();
 
         if (string.IsNullOrEmpty(id))
-            return RedirectToPage("/Index", new { mensagem = "ID da casa não informado" });
+        {
+            Mensagem = "ID da casa não informado";
+            return;
+        }
 
-        // Cria o modelo a partir do JSON
         Modelo model = Modelo.Create(id);
+
+        if (model.Personalization != null)
+        {
+            foreach (var categoria in model.Personalization.Keys)
+            {
+                var opcoes = model.Personalization[categoria];
+                var keys = new List<string>(opcoes.Keys);
+                foreach (var opcao in keys)
+                {
+                    opcoes[opcao] = false;
+                }
+            }
+        }
 
         foreach (var key in Request.Form.Keys)
         {
-            Console.WriteLine($"Aqui {key}");
-            // Exemplo de chave: personalizacao[Automação e Segurança][Câmeras]
             if (key.StartsWith("personalizacao["))
             {
-                string fullKey = key; // chave bruta
-                string categoria = ExtrairEntre(fullKey, "personalizacao[", "]");
-                string opcao = ExtrairEntre(fullKey, $"personalizacao[{categoria}][", "]");
-
-                // if (!novasPersonalizacoes.ContainsKey(categoria))
-                //     novasPersonalizacoes[categoria] = new Dictionary<string, bool>();
-                Console.WriteLine($"[{categoria}][{opcao}]");
-                model.Personalization![categoria][opcao] = true;
+                string categoria = ExtrairEntre(key, "personalizacao[", "]");
+                string opcao = ExtrairEntre(key, $"personalizacao[{categoria}][", "]");
+                if (model.Personalization != null)
+                {
+                    if (model.Personalization.ContainsKey(categoria) &&
+                        model.Personalization[categoria].ContainsKey(opcao))
+                    {
+                        model.Personalization[categoria][opcao] = true;
+                    }
+                }
             }
         }
 
         model.Store();
 
-        return RedirectToPage("/Index", new { mensagem = "Personalização salva com sucesso" });
+        // Continua na mesma página, setando a mensagem para mostrar
+        Mensagem = "Personalização salva com sucesso";
+
+        // Atualiza os dados para refletir as mudanças no form
+        Dados = model;
     }
 
-    // Função auxiliar para extrair strings entre colchetes
     private static string ExtrairEntre(string input, string start, string end)
     {
         int inicio = input.IndexOf(start) + start.Length;
