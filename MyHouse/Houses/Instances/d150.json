@@ -4,23 +4,55 @@
   "Price": 1.0,
   "Avaiable": true,
   "Personalization": {
-    "Automacao e Seguranca": {
-      "Alarme": true,
-      "Cameras": false,
-      "Fechadura Digital": false
+    "Tudo": {
+      "Automacao e Seguranca": {
+        "Alarme": false,
+        "Cameras": false,
+        "Fechadura Digital": false
+      },
+      "Climatizacao": {
+        "Ar-condicionado Split": false,
+        "Ventilacao Natural": false
+      },
+      "Acabamentos": {
+        "Piso Vinilico": false,
+        "Revestimento 3D": false,
+        "Teto Rebaixado": false
+      }
     },
-    "Sanitario": {
-      "Ducha Higienica": false,
-      "Vaso Inteligente": false
+    "Banheiro": {
+      "Base": {
+        "Ducha Higienica": false,
+        "Vaso Inteligente": false
+      }
     },
-    "Climatizacao": {
-      "Ar-condicionado Split": false,
-      "Ventilacao Natural": false
+    "Quarto Solteiro": {
+      "Base": {
+        "Iluminação LED": false,
+        "Móveis planejados": false,
+        "Piso vinílico": false
+      }
     },
-    "Acabamentos": {
-      "Piso Vinilico": false,
-      "Revestimento 3D": false,
-      "Teto Rebaixado": false
+    "Lavanderia": {
+      "Base": {
+        "Iluminação LED": false,
+        "Móveis planejados": false,
+        "Piso vinílico": false
+      }
+    },
+    "Quarto Casal": {
+      "Base": {
+        "Iluminação LED": false,
+        "Móveis planejados": false,
+        "Piso vinílico": false
+      }
+    },
+    "Sala": {
+      "Base": {
+        "Iluminação LED": false,
+        "Móveis planejados": false,
+        "Piso vinílico": false
+      }
     }
   }
 }

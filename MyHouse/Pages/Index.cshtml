@@ -22,17 +22,16 @@
         }
 
         .sidebar {
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 200px;
-        height: 100vh;       
-        background-color: rgba(228, 222, 210, 0.9);
-        padding-top: 20px;
-        overflow-y: auto;   
-        overscroll-behavior: contain;
-}
-
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 200px;
+            height: 100vh;       
+            background-color: rgba(228, 222, 210, 0.9);
+            padding-top: 20px;
+            overflow-y: auto;   
+            overscroll-behavior: contain;
+        }
 
         .logo {
             text-align: center;
@@ -79,6 +78,11 @@
             gap: 5px;
         }
 
+        .submenu a {
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+
         .content {
             margin-left: 220px;
             padding: 20px;
@@ -86,13 +90,23 @@
             color: #333;
         }
 
+        .imagem-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Configuração padronizada para imagens */
         .imagem-container img {
             width: 100%;
             max-width: 500px;
-            height: auto;
+            height: 400px;
             border-radius: 10px;
             box-shadow: 0 0 8px rgba(0,0,0,0.3);
-            object-fit: cover;
+            display: block;
+            background-color: #ffffff;
+            object-fit: contain;
+            object-position: center;
+            margin: 0 auto;
         }
 
         .personalizar-btn {
@@ -131,6 +145,109 @@
             color: #155724;
             cursor: pointer;
         }
+
+        .carousel-container {
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .carousel-arrow {
+            background: rgba(0, 168, 107, 0.7);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(0, 168, 107, 0.9);
+            transform: scale(1.1);
+        }
+
+        .carousel-arrow:disabled {
+            background: rgba(200, 200, 200, 0.5);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .dots-container {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .dot.active {
+            background-color: #00a86b;
+            transform: scale(1.2);
+        }
+
+        .dot:hover {
+            background-color: #007e52;
+        }
+
+        .navegacao-imagens {
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .navegacao-imagens button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #00a86b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .navegacao-imagens button:hover {
+            background-color: #007e52;
+        }
+
+        .navegacao-imagens button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .info-imagem {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .contador-imagens {
+            text-align: center;
+            margin-top: 5px;
+            color: #777;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -151,7 +268,7 @@
                 {
                     foreach (var casa in Model.ListaDeCasas)
                     {
-                        <a href="#" onclick="mostrarImagem('@casa.Img', '@casa.Id')">@casa.Id</a>
+                        <a href="#" onclick="iniciarVisualizacaoCasa('@casa.Id', '@casa.Img')">@casa.Id</a>
                     }
                 }
                 else
@@ -160,19 +277,19 @@
                 }
             </div>
 
-           
+            <!-- Cômodos -->
             <button onclick="toggleMenu('comodos')">
                 <i class="fas fa-door-open" style="margin-right: 8px;"></i> Cômodos
             </button>
             <div id="comodos" class="submenu">
-                 <a href="#" onclick="mostrarImagemComodo('sala.jpg', 'sala')">sala</a>
-                <a href="#" onclick="mostrarImagemComodo('banheiro.jpg', 'banheiro')">banheiro</a>
+                <a href="#" onclick="mostrarImagemComodo('sala.jpg', 'sala')">Sala</a>
+                <a href="#" onclick="mostrarImagemComodo('banheiro.jpg', 'banheiro')">Banheiro</a>
                 <a href="#" onclick="mostrarImagemComodo('lavanderia.jpg', 'lavanderia')">Lavanderia</a>
                 <a href="#" onclick="mostrarImagemComodo('quartoSolteiro.jpg', 'quartoSolteiro')">Quarto de Solteiro</a>
                 <a href="#" onclick="mostrarImagemComodo('quartoCasal.jpg', 'quartoCasal')">Quarto de Casal</a>
             </div>
 
-            
+            <!-- Outros -->
             <button onclick="toggleMenu('outros')">
                 <i class="fas fa-bars" style="margin-right: 8px;"></i> Outros
             </button>
@@ -200,40 +317,257 @@
 
         <div class="imagem-container" id="imagemContainer" style="display:none;">
             <img id="imagemCasa" src="" alt="Imagem selecionada" />
+            <div class="info-imagem" id="infoImagem"></div>
+            <div class="contador-imagens" id="contadorImagens"></div>
+            
+            <div class="carousel-container" id="carouselContainer" style="display:none;">
+                <div class="carousel-dots">
+                    <button class="carousel-arrow" id="btnEsquerda" onclick="imagemAnterior()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="dots-container" id="dotsContainer">
+                        <!-- Dots serão gerados dinamicamente -->
+                    </div>
+                    
+                    <button class="carousel-arrow" id="btnDireita" onclick="proximaImagem()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            
             <br />
             <a id="btnPersonalizar" href="#" class="personalizar-btn" style="display: none;">Personalizar</a>
+        </div>
+
+        <div class="navegacao-imagens" id="navegacaoImagens" style="display:none;">
+            <button id="btnAnterior" onclick="imagemAnterior()">
+                <i class="fas fa-chevron-left"></i> Anterior
+            </button>
+            <button id="btnProxima" onclick="proximaImagem()">
+                Próxima <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
     </div>
 
     <script>
+        let casaAtual = null;
+        let imagemAtual = 0;
+        let imagens = [];
+        let autoPlayInterval = null;
+        let isAutoPlaying = true;
+        const autoPlayDelay = 3000; // 3 segundos
+
+        // Lista de cômodos disponíveis
+        const comodos = [
+            { nome: 'Sala', arquivo: 'sala.jpg', id: 'sala' },
+            { nome: 'Banheiro', arquivo: 'banheiro.jpg', id: 'banheiro' },
+            { nome: 'Lavanderia', arquivo: 'lavanderia.jpg', id: 'lavanderia' },
+            { nome: 'Quarto de Solteiro', arquivo: 'quartoSolteiro.jpg', id: 'quartoSolteiro' },
+            { nome: 'Quarto de Casal', arquivo: 'quartoCasal.jpg', id: 'quartoCasal' }
+        ];
+
         function toggleMenu(id) {
             const el = document.getElementById(id);
             el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
         }
 
-        function mostrarImagem(nomeImagem, idCasa) {
+        function iniciarVisualizacaoCasa(idCasa, imagemCasa) {
+            casaAtual = idCasa;
+            imagemAtual = 0;
+            
+            // Criar array de imagens: primeiro a casa, depois os cômodos
+            imagens = [
+                {
+                    src: `/images/casas/${imagemCasa}`,
+                    nome: `Casa ${idCasa}`,
+                    tipo: 'casa',
+                    id: idCasa
+                }
+            ];
+
+            // Adicionar cômodos da casa
+            comodos.forEach(comodo => {
+                imagens.push({
+                    src: `/images/casas/comodos/${idCasa}/${comodo.arquivo}`,
+                    nome: `${comodo.nome} - Casa ${idCasa}`,
+                    tipo: 'comodo',
+                    id: comodo.id
+                });
+            });
+
+            criarDots();
+            mostrarImagemAtual();
+            iniciarAutoPlay();
+        }
+
+        function criarDots() {
+            const dotsContainer = document.getElementById('dotsContainer');
+            dotsContainer.innerHTML = '';
+            
+            imagens.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.className = 'dot';
+                dot.onclick = () => irParaImagem(index);
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function atualizarDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === imagemAtual);
+            });
+        }
+
+        function mostrarImagemAtual() {
             const imagem = document.getElementById('imagemCasa');
             const container = document.getElementById('imagemContainer');
+            const carouselContainer = document.getElementById('carouselContainer');
+            const info = document.getElementById('infoImagem');
+            const contador = document.getElementById('contadorImagens');
             const btn = document.getElementById('btnPersonalizar');
+            const btnEsquerda = document.getElementById('btnEsquerda');
+            const btnDireita = document.getElementById('btnDireita');
 
-            imagem.src = `/images/casas/${nomeImagem}`;
+            if (imagens.length === 0) return;
+
+            const imagemAtualObj = imagens[imagemAtual];
+            
+            imagem.src = imagemAtualObj.src;
+            info.textContent = imagemAtualObj.nome;
+            contador.textContent = `${imagemAtual + 1} de ${imagens.length}`;
+            
+            // Aplicar configuração padrão para todas as imagens
+            imagem.className = '';
+            
             container.style.display = 'block';
-            btn.href = `/Personalizar?id=${idCasa}`;
-            btn.textContent = 'Personalizar';
+            carouselContainer.style.display = 'block';
+
+            // Configurar botão personalizar
+            if (imagemAtualObj.tipo === 'casa') {
+                btn.href = `/Personalizar?id=${imagemAtualObj.id}`;
+                btn.textContent = 'Personalizar Casa';
+            } else {
+                btn.href = `/PersonalizarComodo?id=${imagemAtualObj.id}&casa=${casaAtual}`;
+                btn.textContent = 'Personalizar Cômodo';
+            }
             btn.style.display = 'inline-block';
+
+            // Configurar botões de navegação
+            btnEsquerda.disabled = imagemAtual === 0;
+            btnDireita.disabled = imagemAtual === imagens.length - 1;
+            
+            atualizarDots();
+        }
+
+        function proximaImagem() {
+            if (imagemAtual < imagens.length - 1) {
+                imagemAtual++;
+            } else {
+                imagemAtual = 0; // Volta para a primeira imagem
+            }
+            mostrarImagemAtual();
+        }
+
+        function imagemAnterior() {
+            if (imagemAtual > 0) {
+                imagemAtual--;
+            } else {
+                imagemAtual = imagens.length - 1; // Vai para a última imagem
+            }
+            mostrarImagemAtual();
+        }
+
+        function irParaImagem(index) {
+            imagemAtual = index;
+            mostrarImagemAtual();
+        }
+
+        function iniciarAutoPlay() {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+            }
+            
+            if (isAutoPlaying && imagens.length > 1) {
+                autoPlayInterval = setInterval(() => {
+                    proximaImagem();
+                }, autoPlayDelay);
+            }
+        }
+
+        function pararAutoPlay() {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+            }
+        }
+
+        function toggleAutoPlay() {
+            isAutoPlaying = !isAutoPlaying;
+            
+            if (isAutoPlaying) {
+                iniciarAutoPlay();
+            } else {
+                pararAutoPlay();
+            }
         }
 
         function mostrarImagemComodo(nomeImagem, idComodo) {
             const imagem = document.getElementById('imagemCasa');
             const container = document.getElementById('imagemContainer');
+            const carouselContainer = document.getElementById('carouselContainer');
+            const info = document.getElementById('infoImagem');
+            const contador = document.getElementById('contadorImagens');
             const btn = document.getElementById('btnPersonalizar');
 
-            imagem.src = `/images/comodos/${nomeImagem}`;
+            // Parar autoplay
+            pararAutoPlay();
+
+            imagem.src = `/images/casas/comodos/d150/${nomeImagem}`;
+            imagem.className = ''; // Aplicar configuração padrão
+            info.textContent = idComodo.charAt(0).toUpperCase() + idComodo.slice(1);
+            contador.textContent = '';
+            
             container.style.display = 'block';
+            carouselContainer.style.display = 'none';
             btn.href = `/PersonalizarComodo?id=${idComodo}`;
-            btn.textContent = 'Personalizar cômodo';
+            btn.textContent = 'Personalizar Cômodo';
             btn.style.display = 'inline-block';
+
+            // Reset das variáveis de navegação
+            casaAtual = null;
+            imagemAtual = 0;
+            imagens = [];
         }
+
+        // Pausar autoplay quando o mouse estiver sobre a imagem
+        document.addEventListener('DOMContentLoaded', function() {
+            const imagemContainer = document.getElementById('imagemContainer');
+            
+            imagemContainer.addEventListener('mouseenter', function() {
+                if (isAutoPlaying) {
+                    pararAutoPlay();
+                }
+            });
+            
+            imagemContainer.addEventListener('mouseleave', function() {
+                if (isAutoPlaying && imagens.length > 1) {
+                    iniciarAutoPlay();
+                }
+            });
+        });
+
+        // Atalhos de teclado para navegação
+        document.addEventListener('keydown', function(e) {
+            if (imagens.length > 0) {
+                if (e.key === 'ArrowLeft') {
+                    imagemAnterior();
+                } else if (e.key === 'ArrowRight') {
+                    proximaImagem();
+                }
+            }
+        });
     </script>
 
 </body>

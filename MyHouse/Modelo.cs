@@ -15,10 +15,10 @@ public class Modelo{
     public decimal? Price { get; set; } // Preço da casa em reais
     public bool? Avaiable { get; set; } // Se o modelo está disponível para venda
 
-    public Dictionary<string, Dictionary<string, bool>>? Personalization { get; set; }
+    public Dictionary<string, Dictionary<string, Dictionary<string, bool>>>? Personalization { get; set; }
     // Construtor
     [JsonConstructor]
-    Modelo(string id, int sales, decimal price, bool avaiable, Dictionary<string, Dictionary<string, bool>>? personalization) {
+    Modelo(string id, int sales, decimal price, bool avaiable, Dictionary<string, Dictionary<string, Dictionary<string, bool>>>? personalization) {
         Id = id;
         Sales = sales;
         Price = price;

@@ -32,9 +32,9 @@ public class PersonalizarModel : PageModel
 
         if (model.Personalization != null)
         {
-            foreach (var categoria in model.Personalization.Keys)
+            foreach (var categoria in model.Personalization["Tudo"].Keys)
             {
-                var opcoes = model.Personalization[categoria];
+                var opcoes = model.Personalization["Tudo"][categoria];
                 var keys = new List<string>(opcoes.Keys);
                 foreach (var opcao in keys)
                 {
@@ -52,9 +52,9 @@ public class PersonalizarModel : PageModel
                 if (model.Personalization != null)
                 {
                     if (model.Personalization.ContainsKey(categoria) &&
-                        model.Personalization[categoria].ContainsKey(opcao))
+                        model.Personalization[categoria]["Tudo"].ContainsKey(opcao))
                     {
-                        model.Personalization[categoria][opcao] = true;
+                        model.Personalization[categoria]["Tudo"][opcao] = true;
                     }
                 }
             }

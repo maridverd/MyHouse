@@ -10,7 +10,7 @@
     <form method="post">
         @if (Model.Dados?.Personalization != null)
         {
-            foreach (var categoria in Model.Dados.Personalization)
+            foreach (var categoria in Model.Dados.Personalization["Tudo"])
             {
                 <div class="categoria">
                     <h3>@categoria.Key</h3>
