@@ -291,13 +291,6 @@
             <button onclick="toggleMenu('comodos')">
                 <i class="fas fa-door-open" style="margin-right: 8px;"></i> Cômodos
             </button>
-            <div id="comodos" class="submenu">
-                <a href="#" onclick="mostrarImagemComodo('sala.jpg', 'sala')">Sala</a>
-                <a href="#" onclick="mostrarImagemComodo('banheiro.jpg', 'banheiro')">Banheiro</a>
-                <a href="#" onclick="mostrarImagemComodo('lavanderia.jpg', 'lavanderia')">Lavanderia</a>
-                <a href="#" onclick="mostrarImagemComodo('quartoSolteiro.jpg', 'quartoSolteiro')">Quarto de Solteiro</a>
-                <a href="#" onclick="mostrarImagemComodo('quartoCasal.jpg', 'quartoCasal')">Quarto de Casal</a>
-            </div>
 
             <!-- Outros -->
             <button onclick="toggleMenu('outros')">
@@ -522,34 +515,6 @@
             } else {
                 pararAutoPlay();
             }
-        }
-
-        function mostrarImagemComodo(nomeImagem, idComodo) {
-            const imagem = document.getElementById('imagemCasa');
-            const container = document.getElementById('imagemContainer');
-            const carouselContainer = document.getElementById('carouselContainer');
-            const info = document.getElementById('infoImagem');
-            const contador = document.getElementById('contadorImagens');
-            const btn = document.getElementById('btnPersonalizar');
-
-            // Parar autoplay
-            pararAutoPlay();
-
-            imagem.src = `/images/casas/comodos/d150/${nomeImagem}`;
-            imagem.className = ''; // Aplicar configuração padrão
-            info.textContent = idComodo.charAt(0).toUpperCase() + idComodo.slice(1);
-            contador.textContent = '';
-            
-            container.style.display = 'block';
-            carouselContainer.style.display = 'none';
-            btn.href = `/PersonalizarComodo?id=${idComodo}`;
-            btn.textContent = 'Personalizar Cômodo';
-            btn.style.display = 'inline-block';
-
-            // Reset das variáveis de navegação
-            casaAtual = null;
-            imagemAtual = 0;
-            imagens = [];
         }
 
         // Pausar autoplay quando o mouse estiver sobre a imagem
