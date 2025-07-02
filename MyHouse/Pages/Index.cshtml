@@ -88,11 +88,48 @@
             padding: 20px;
             max-width: 900px;
             color: #333;
+            position: relative;
+            min-height: calc(100vh - 40px);
+        }
+
+        .texto-inicial {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+        }
+
+        /* Container unificado para imagem inicial e imagens das casas */
+        .container-imagem {
+            text-align: center;
+            margin-top: 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Imagem inicial que aparece quando nenhuma casa está selecionada */
+        .imagem-inicial {
+            transition: all 0.5s ease-in-out;
+        }
+
+        .imagem-inicial img {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .imagem-inicial.hidden {
+            display: none;
         }
 
         .imagem-container {
             margin-bottom: 20px;
             text-align: center;
+            position: relative;
+            z-index: 1;
+            margin-top: 20px;
         }
 
         /* Configuração padronizada para imagens */
@@ -133,6 +170,7 @@
             border-radius: 5px;
             font-weight: bold;
             position: relative;
+            z-index: 1;
         }
 
         .fechar-alerta {
@@ -291,17 +329,24 @@
     </div>
 
     <div class="content">
-        <h2>Bem-vindo ao MyHOUSE!</h2>
+        <div class="texto-inicial" id="textoInicial">
+            <h2>Bem-vindo ao MyHOUSE!</h2>
+            
+            @if (!string.IsNullOrEmpty(mensagem))
+            {
+                <div class="mensagem-sucesso" id="mensagemAlerta">
+                    @mensagem
+                    <button class="fechar-alerta" onclick="document.getElementById('mensagemAlerta').style.display='none'">×</button>
+                </div>
+            }
 
-        @if (!string.IsNullOrEmpty(mensagem))
-        {
-            <div class="mensagem-sucesso" id="mensagemAlerta">
-                @mensagem
-                <button class="fechar-alerta" onclick="document.getElementById('mensagemAlerta').style.display='none'">×</button>
-            </div>
-        }
+            <p>Mais que uma empresa inovadora, um conceito: casas cheias de tecnologia, estilo e personalidade.</p>
+        </div>
 
-        <p>Mais que uma empresa inovadora, um conceito: casas cheias de tecnologia, estilo e personalidade.</p>
+        <!-- Imagem inicial -->
+        <div class="imagem-inicial" id="imagemInicial">
+            <img src="~/images/familia.jpg" alt="MyHouse - Casas Tecnológicas" />
+        </div>
 
         <div class="imagem-container" id="imagemContainer" style="display:none;">
             <img id="imagemCasa" src="" alt="Imagem selecionada" />
@@ -364,6 +409,9 @@
             casaAtual = idCasa;
             imagemAtual = 0;
             
+            // Ocultar imagem inicial e texto inicial
+            ocultarImagemInicial();
+            
             // Criar array de imagens: primeiro a casa, depois os cômodos
             imagens = [
                 {
@@ -387,6 +435,36 @@
             criarDots();
             mostrarImagemAtual();
             iniciarAutoPlay();
+        }
+
+        function ocultarImagemInicial() {
+            const imagemInicial = document.getElementById('imagemInicial');
+            imagemInicial.classList.add('hidden');
+        }
+
+        function mostrarImagemInicial() {
+            const imagemInicial = document.getElementById('imagemInicial');
+            const textoInicial = document.getElementById('textoInicial');
+            
+            imagemInicial.classList.remove('hidden');
+            textoInicial.style.display = 'block';
+        }
+
+        function voltarAoInicio() {
+            // Limpar dados da casa atual
+            casaAtual = null;
+            imagemAtual = 0;
+            imagens = [];
+            
+            // Parar autoplay
+            pararAutoPlay();
+            
+            // Ocultar containers de imagem
+            document.getElementById('imagemContainer').style.display = 'none';
+            document.getElementById('carouselContainer').style.display = 'none';
+            
+            // Mostrar imagem inicial
+            mostrarImagemInicial();
         }
 
         function criarDots() {
@@ -525,6 +603,8 @@
                     imagemAnterior();
                 } else if (e.key === 'ArrowRight') {
                     proximaImagem();
+                } else if (e.key === 'Escape') {
+                    voltarAoInicio();
                 }
             }
         });
