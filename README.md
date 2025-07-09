@@ -8,11 +8,13 @@ Site de venda de moradias modulares pré-fabricadas.
 
 2. Execute a aplicação usando .NET SDK:
    dotnet run --project MyHouse.csproj
+   Observação: Se ainda não tiver o .NET SDK instalado, faça download através do link https://dotnet.microsoft.com/en-us/download
+   Para verificar se foi instalado execute no terminal o comando: dotnet --version
 
-3. Acesse a interface web:
+4. Acesse a interface web:
    http://localhost:XXXX
 
-4. Para parar a aplicação, use Ctrl+C no terminal.
+5. Para parar a aplicação, use Ctrl+C no terminal.
 
 ## Funcionalidades
  - Usuário efetua cadastro 
